@@ -1467,6 +1467,129 @@ body { min-width: 320px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* ================= ERP IMPLEMENTATION SUITE ADDITIONS ================= */
+.imp-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+}
+.imp-tab-btn {
+    padding: 9px 15px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 700;
+    transition: 0.2s;
+}
+.imp-tab-btn:hover {
+    background: var(--card2);
+}
+.imp-tab-btn.active {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+}
+.imp-subpanel {
+    display: none;
+    animation: fadeUp 0.25s ease;
+}
+.imp-subpanel.active {
+    display: block;
+}
+.imp-note-banner {
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e3a8a;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+[data-theme="dark"] .imp-note-banner {
+    background: #172554;
+    border-color: #1d4ed8;
+    color: #dbeafe;
+}
+.imp-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+.imp-point-card {
+    padding: 18px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+.imp-point-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 12px;
+    font-weight: 800;
+    margin-right: 8px;
+}
+.imp-point-card h4 {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text);
+}
+.imp-point-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+.imp-why {
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--card2);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text);
+}
+.imp-check-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--card);
+    margin-bottom: 10px;
+}
+.imp-check-row input[type="checkbox"] {
+    margin-top: 4px;
+    width: 17px;
+    height: 17px;
+    accent-color: var(--primary);
+    flex-shrink: 0;
+}
+.imp-step-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 11px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
 </style>
 </head>
 
@@ -1577,6 +1700,15 @@ body { min-width: 320px; }
         <button type="button" data-page="shipping" data-role="admin,sales,inventory"><span class="nav-icon">⇢</span> Dispatch & Serial Registry</button>
         </nav>
 
+        <div class="nav-title">ERP Implementation Lifecycle</div>
+        <nav class="nav" id="implementationNav">
+        <button type="button" data-page="imp-overview" data-role="all"><span class="nav-icon">◈</span> Purpose, Lifecycle & Business Case</button>
+        <button type="button" data-page="imp-methodology" data-role="all"><span class="nav-icon">⇄</span> Methodology & Gap Analysis</button>
+        <button type="button" data-page="imp-golive" data-role="all"><span class="nav-icon">⚡</span> Setup to Go-Live & Strategies</button>
+        <button type="button" data-page="imp-team-training" data-role="all"><span class="nav-icon">♙</span> Team Roles & User Training</button>
+        <button type="button" data-page="imp-post" data-role="all"><span class="nav-icon">⚒</span> Post-Implementation & Support</button>
+        </nav>
+
     <div class="nav-title" id="departmentNavTitle">Department Workspace</div><nav class="nav" id="departmentNav"></nav>
 
     <div class="sidebar-footer">
@@ -1632,6 +1764,7 @@ body { min-width: 320px; }
             <button class="btn btn-white" data-modal="productionModal">＋ Production Order</button>
             <button class="btn btn-primary" data-modal="inventoryModal">＋ Add Inventory</button>
             <button class="btn btn-light" data-modal="purchaseModal">＋ Purchase Order</button>
+            <button class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4)" data-page-jump="imp-overview">◈ ERP Implementation Notes</button>
         </div>
     </div>
 
@@ -1905,6 +2038,426 @@ body { min-width: 320px; }
 <div class="page" id="maintenance"><div class="page-title"><div><h2>Maintenance & Downtime</h2><p>Track preventive maintenance, breakdown reports and machine service schedules.</p></div><button class="btn btn-primary" onclick="toast('Maintenance request','Demo maintenance ticket created.')">＋ Raise Maintenance Ticket</button></div><div class="module-grid"><div class="card stat-box"><small>Machines Online</small><strong>42 / 45</strong></div><div class="card stat-box"><small>Open Work Orders</small><strong>6</strong></div><div class="card stat-box"><small>Mean Time to Repair</small><strong>38 min</strong></div><div class="card stat-box"><small>Planned Maintenance</small><strong>94%</strong></div></div><div class="card"><div class="table-container"><table><thead><tr><th>Machine ID</th><th>Machine</th><th>Line</th><th>Last Service</th><th>Next Service</th><th>Condition</th><th>Action</th></tr></thead><tbody><tr><td>MCH-014</td><td>Automated Screw Driver</td><td>Assembly A</td><td>02 Oct 2026</td><td>16 Oct 2026</td><td><span class="status status-success">Operational</span></td><td><button class="btn btn-outline btn-small" onclick="toast('Machine details','Maintenance history opened.')">View Log</button></td></tr><tr><td>MCH-022</td><td>Thermal Test Chamber</td><td>Quality B</td><td>21 Sep 2026</td><td>13 Oct 2026</td><td><span class="status status-warning">Service Due</span></td><td><button class="btn btn-primary btn-small" onclick="toast('Maintenance scheduled','Service visit added to demo schedule.')">Schedule</button></td></tr></tbody></table></div></div></div>
 <div class="page" id="shipping"><div class="page-title"><div><h2>Dispatch & Serial Number Registry</h2><p>Manage packed units, shipment tracking, warranty traceability and delivery status.</p></div><button class="btn btn-primary" onclick="toast('Dispatch created','A demo dispatch batch has been added.')">＋ Create Dispatch</button></div><div class="kpis"><div class="card kpi"><div class="kpi-top">Ready to Dispatch</div><div class="kpi-value">428</div></div><div class="card kpi"><div class="kpi-top">In Transit</div><div class="kpi-value">1,204</div></div><div class="card kpi"><div class="kpi-top">Delivered This Month</div><div class="kpi-value">8,492</div></div><div class="card kpi"><div class="kpi-top">Serials Verified</div><div class="kpi-value">100%</div></div></div><div class="card"><div class="table-container"><table><thead><tr><th>Dispatch ID</th><th>Customer</th><th>Model</th><th>Units</th><th>Tracking</th><th>Delivery Date</th><th>Status</th></tr></thead><tbody><tr><td>DSP-2026-310</td><td>Bharat Forge</td><td>Vivobook 15</td><td>500</td><td>TRK-IND-774201</td><td>16 Oct 2026</td><td><span class="status status-info">In Transit</span></td></tr><tr><td>DSP-2026-311</td><td>Tata Auto Systems</td><td>Vivobook S 14</td><td>250</td><td>TRK-IND-774228</td><td>18 Oct 2026</td><td><span class="status status-success">Packed</span></td></tr></tbody></table></div></div></div>
 
+<!-- ========================================================================= -->
+<!-- ERP IMPLEMENTATION NOTES MODULES (SLIDES 01 TO 10)                        -->
+<!-- ========================================================================= -->
+
+<!-- MODULE A: PURPOSE, LIFECYCLE & BUSINESS CASE (SLIDES 01, 02, 03) -->
+<div class="page" id="imp-overview">
+    <div class="page-title">
+        <div>
+            <h2>ERP Implementation: Purpose, Lifecycle & Business Case</h2>
+            <p>Core principles, lifecycle roadmap, rollout strategy selector, and 7-point business case evaluation.</p>
+        </div>
+        <span class="status status-info">Slides 01 – 03</span>
+    </div>
+
+    <div class="imp-tabs">
+        <button type="button" class="imp-tab-btn active" onclick="switchImpTab('imp-overview','tab-purpose',this)">01. Purpose & Challenges</button>
+        <button type="button" class="imp-tab-btn" onclick="switchImpTab('imp-overview','tab-lifecycle',this)">02. Implementation Lifecycle</button>
+        <button type="button" class="imp-tab-btn" onclick="switchImpTab('imp-overview','tab-businesscase',this)">03. Build the Business Case</button>
+    </div>
+
+    <!-- SLIDE 01 -->
+    <div class="imp-subpanel active" id="tab-purpose">
+        <div class="imp-note-banner">
+            <strong>Core Principle (Slide 01):</strong> ERP success depends on <em>coordinated organisation-wide adoption, not software alone</em>. Review all 6 foundational pillars and operational risks below.
+        </div>
+        <div class="imp-card-grid">
+            <div class="imp-point-card">
+                <div>
+                    <h4><span class="imp-point-num">1</span>ERP integrates functions, people and procedures</h4>
+                    <p>An ERP system connects activities such as purchasing, production, finance and human resources through shared information.</p>
+                </div>
+                <div class="imp-why">Why it matters: ERP success depends on coordinated organisation-wide adoption, not software alone.</div>
+            </div>
+            <div class="imp-point-card">
+                <div>
+                    <h4><span class="imp-point-num">2</span>Aims to improve profitability, efficiency and data accuracy</h4>
+                    <p>Integration can reduce duplicated work, improve resource use and provide reliable information for planning and managerial decisions.</p>
+                </div>
+                <div class="imp-why">Why it matters: ERP success depends on coordinated organisation-wide adoption, not software alone.</div>
+            </div>
+            <div class="imp-point-card">
+                <div>
+                    <h4><span class="imp-point-num">3</span>Implementation affects the entire organisation</h4>
+                    <p>ERP changes how departments exchange information and perform tasks, requiring coordination among users, managers, business functions and IT staff.</p>
+                </div>
+                <div class="imp-why">Why it matters: ERP success depends on coordinated organisation-wide adoption, not software alone.</div>
+            </div>
+            <div class="imp-point-card">
+                <div>
+                    <h4><span class="imp-point-num">4</span>Requires substantial time, resources and commitment</h4>
+                    <p>The organisation invests in software, infrastructure, consultants, employee time and training. Management commitment is needed throughout the project.</p>
+                </div>
+                <div class="imp-why">Why it matters: ERP success depends on coordinated organisation-wide adoption, not software alone.</div>
+            </div>
+            <div class="imp-point-card">
+                <div>
+                    <h4><span class="imp-point-num">5</span>Initial performance may stagnate or decline</h4>
+                    <p>Productivity can temporarily fall while employees learn new procedures and the organisation adjusts. Benefits may take time to emerge.</p>
+                </div>
+                <div class="imp-why">Why it matters: ERP success depends on coordinated organisation-wide adoption, not software alone.</div>
+            </div>
+            <div class="imp-point-card">
+                <div>
+                    <h4><span class="imp-point-num">6</span>Poor redesign, config, capacity & training create risk</h4>
+                    <p>Unclear workflows, incorrect settings, inadequate computing capacity and weak user preparation can cause errors, delays and resistance.</p>
+                </div>
+                <div class="imp-why">Why it matters: ERP success depends on coordinated organisation-wide adoption, not software alone.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 02 -->
+    <div class="imp-subpanel" id="tab-lifecycle">
+        <div class="imp-note-banner">
+            <strong>Lifecycle Roadmap (Slide 02):</strong> These 6 stages provide a structured path from initial justification through deployment and subsequent evaluation.
+        </div>
+        <div class="imp-card-grid">
+            <div class="imp-point-card">
+                <div>
+                    <h4><span class="imp-point-num">1</span>Pre-implementation: Business case & solution</h4>
+                    <p>The organisation defines why ERP is needed, assesses requirements and feasibility, compares products and selects a solution that fits its objectives.</p>
+                </div>
+                <span class="status status-success">Stage 1 · Justification</span>
+            </div>
+            <div class="imp-point-card">
+                <div>
+                    <h4><span class="imp-point-num">2</span>Implementation: Change, projects & IT</h4>
+                    <p>This stage translates the plan into an operating system through process changes, project scheduling, infrastructure preparation, configuration and data transfer.</p>
+                </div>
+                <span class="status status-info">Stage 2 · Execution</span>
+            </div>
+            <div class="imp-point-card">
+                <div>
+                    <h4><span class="imp-point-num">3</span>Assess organisational readiness before rollout</h4>
+                    <p>Assess resources, processes, user support and infrastructure to determine whether the organisation can absorb the proposed changes.</p>
+                </div>
+                <span class="status status-warning">Stage 3 · Readiness Gate</span>
+            </div>
+            <div class="imp-point-card">
+                <div>
+                    <h4><span class="imp-point-num">4</span>Choose a phased or big-bang rollout approach</h4>
+                    <p>A <strong>phased rollout</strong> introduces modules or departments in stages. A <strong>big-bang rollout</strong> switches the organisation to the new system at once.</p>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center">
+                    <select class="form-control" id="rolloutStrategySelect" style="height:34px;font-size:12px" onchange="toast('Rollout Approach Updated', 'Selected strategy: ' + this.value)">
+                        <option value="Phased Rollout (By Module / Department)">Selected: Phased Rollout</option>
+                        <option value="Big-Bang Rollout (Simultaneous Cutover)">Selected: Big-Bang Rollout</option>
+                    </select>
+                </div>
+            </div>
+            <div class="imp-point-card">
+                <div>
+                    <h4><span class="imp-point-num">5</span>Post-implementation: Assess impact & improve</h4>
+                    <p>After go-live, review system performance and business outcomes, resolve operational issues and identify changes that can improve the ERP system.</p>
+                </div>
+                <span class="status status-info">Stage 5 · Optimisation</span>
+            </div>
+            <div class="imp-point-card">
+                <div>
+                    <h4><span class="imp-point-num">6</span>Post-impact analysis: 1–2 years after go-live</h4>
+                    <p>The text places post-impact analysis generally 1–2 years after implementation, allowing financial and organisational effects to be assessed after sustained operation.</p>
+                </div>
+                <span class="status status-success">Stage 6 · 1–2 Yr Review</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 03 -->
+    <div class="imp-subpanel" id="tab-businesscase">
+        <div class="imp-note-banner">
+            <strong>Pre-Implementation Business Case (Slide 03):</strong> A sound business case helps decision-makers judge whether the organisation is ready to proceed. Evaluate all 7 criteria below.
+        </div>
+        <div class="card card-body" style="margin-bottom:18px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                <div>
+                    <h3>Business Case Readiness Checklist</h3>
+                    <p>Track completion of the 7 pre-implementation business case steps</p>
+                </div>
+                <span class="status status-info" id="bcScoreBadge">0 / 7 Verified</span>
+            </div>
+            <div id="businessCaseChecklist"></div>
+        </div>
+    </div>
+</div>
+
+<!-- MODULE B: METHODOLOGY & GAP ANALYSIS (SLIDES 04, 05) -->
+<div class="page" id="imp-methodology">
+    <div class="page-title">
+        <div>
+            <h2>ERP Implementation Methodology & Process Gap Analysis</h2>
+            <p>8-step sequential methodology ('as-is' to 'to-be') and interactive functional gap classification register.</p>
+        </div>
+        <span class="status status-info">Slides 04 – 05</span>
+    </div>
+
+    <div class="imp-tabs">
+        <button type="button" class="imp-tab-btn active" onclick="switchImpTab('imp-methodology','tab-method',this)">04. 8-Step Methodology</button>
+        <button type="button" class="imp-tab-btn" onclick="switchImpTab('imp-methodology','tab-gap',this)">05. Process Mapping & Gap Analysis</button>
+    </div>
+
+    <!-- SLIDE 04 -->
+    <div class="imp-subpanel active" id="tab-method">
+        <div class="imp-note-banner">
+            <strong>Sequential Discipline (Slide 04):</strong> This 8-step sequence ensures that <em>technology choices follow an understanding of business needs and target processes</em>—never merely automating inefficient practices.
+        </div>
+        <div class="imp-card-grid" id="methodologyGrid"></div>
+    </div>
+
+    <!-- SLIDE 05 -->
+    <div class="imp-subpanel" id="tab-gap">
+        <div class="imp-note-banner">
+            <strong>Process Mapping & Gap Analysis (Slide 05):</strong> Distinguish process changes from genuine system limitations. Classify gaps by effort: <strong>Small</strong> (project team resolves), <strong>Extensive</strong>, or <strong>Not Feasible</strong> (escalated to Steering Committee).
+        </div>
+
+        <div class="imp-card-grid">
+            <div class="imp-point-card">
+                <h4><span class="imp-point-num">1</span>List business functions</h4>
+                <p>Identify major functions (procurement, production, sales) to establish which processes must be understood during ERP design.</p>
+            </div>
+            <div class="imp-point-card">
+                <h4><span class="imp-point-num">2</span>Map process time, decision points & departments</h4>
+                <p>Record how long work takes, where decisions occur and which departments or locations participate to reveal delays and complexity.</p>
+            </div>
+            <div class="imp-point-card">
+                <h4><span class="imp-point-num">3</span>Record information flows & reporting points</h4>
+                <p>Trace how information moves between people and departments and where reports are produced to uncover duplication and bottlenecks.</p>
+            </div>
+            <div class="imp-point-card">
+                <h4><span class="imp-point-num">4</span>Benchmark cost, quality, lead time & service</h4>
+                <p>Compare current performance with desired or industry benchmarks to set measurable improvement goals.</p>
+            </div>
+            <div class="imp-point-card">
+                <h4><span class="imp-point-num">5</span>Map redesigned processes to standard ERP</h4>
+                <p>Match future workflows with functions already available in the ERP package. Standard features avoid unnecessary development.</p>
+            </div>
+            <div class="imp-point-card">
+                <h4><span class="imp-point-num">6–8</span>Record, classify & escalate gaps</h4>
+                <p>Document unmet requirements as gaps; classify by effort (<strong>Small, Extensive, Not Feasible</strong>). Project team resolves minor gaps; Steering Committee decides on major resources or process changes.</p>
+            </div>
+        </div>
+
+        <div class="card card-body">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px">
+                <div>
+                    <h3>Interactive Process & Gap Analysis Register</h3>
+                    <p>Log requirements not met by standard ERP functionality and route by effort classification</p>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="addGapItem()">＋ Log Process Gap</button>
+            </div>
+            <div class="filter-bar" style="flex-wrap:wrap">
+                <input class="form-control" id="gapFuncInput" placeholder="Function (e.g., Procurement, Production)" style="max-width:210px">
+                <input class="form-control" id="gapDescInput" placeholder="Requirement / Gap description" style="max-width:300px">
+                <select class="form-control" id="gapEffortInput" style="max-width:190px">
+                    <option value="Small">Effort: Small (Minor)</option>
+                    <option value="Extensive">Effort: Extensive</option>
+                    <option value="Not Feasible">Effort: Not Feasible</option>
+                </select>
+            </div>
+            <div class="table-container">
+                <table id="gapAnalysisTable">
+                    <thead>
+                        <tr>
+                            <th>Gap ID</th>
+                            <th>Business Function</th>
+                            <th>Process / Requirement Gap</th>
+                            <th>Effort Classification</th>
+                            <th>Decision Authority</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODULE C: SETUP TO GO-LIVE & STRATEGIES (SLIDES 06, 07) -->
+<div class="page" id="imp-golive">
+    <div class="page-title">
+        <div>
+            <h2>Setup to Go-Live & Success Strategies</h2>
+            <p>8-step go-live readiness controls (including parallel run & user concurrence) and 7 proven implementation strategies.</p>
+        </div>
+        <span class="status status-info">Slides 06 – 07</span>
+    </div>
+
+    <div class="imp-tabs">
+        <button type="button" class="imp-tab-btn active" onclick="switchImpTab('imp-golive','tab-setup',this)">06. Setup to Go-Live Controls</button>
+        <button type="button" class="imp-tab-btn" onclick="switchImpTab('imp-golive','tab-strategies',this)">07. Success Strategies</button>
+    </div>
+
+    <!-- SLIDE 06 -->
+    <div class="imp-subpanel active" id="tab-setup">
+        <div class="imp-note-banner">
+            <strong>Go-Live Controls (Slide 06):</strong> These 8 controls reduce go-live risk and confirm that the configured system is ready for use—including PERT scheduling, trial data transfers, parallel runs, and formal user concurrence.
+        </div>
+        <div class="card card-body">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+                <div>
+                    <h3>Go-Live Readiness Gate Checklist</h3>
+                    <p>Verify each control prior to final production cutover</p>
+                </div>
+                <span class="status status-warning" id="goliveReadinessBadge">4 / 8 Controls Complete</span>
+            </div>
+            <div id="goliveChecklistContainer"></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 07 -->
+    <div class="imp-subpanel" id="tab-strategies">
+        <div class="imp-note-banner">
+            <strong>Strategies for Successful ERP Implementation (Slide 07):</strong> Together, these 7 practices strengthen ownership, reduce disruption and keep implementation aligned with business value.
+        </div>
+        <div class="imp-card-grid" id="strategiesGrid"></div>
+    </div>
+</div>
+
+<!-- MODULE D: TEAM ROLES & USER TRAINING (SLIDES 08, 09) -->
+<div class="page" id="imp-team-training">
+    <div class="page-title">
+        <div>
+            <h2>ERP Team Governance & User Training / Change Management</h2>
+            <p>8-role accountability matrix and 8-principle training & change management framework.</p>
+        </div>
+        <span class="status status-info">Slides 08 – 09</span>
+    </div>
+
+    <div class="imp-tabs">
+        <button type="button" class="imp-tab-btn active" onclick="switchImpTab('imp-team-training','tab-roles',this)">08. Team Roles & Responsibilities</button>
+        <button type="button" class="imp-tab-btn" onclick="switchImpTab('imp-team-training','tab-training',this)">09. Training & Change Management</button>
+    </div>
+
+    <!-- SLIDE 08 -->
+    <div class="imp-subpanel active" id="tab-roles">
+        <div class="imp-note-banner">
+            <strong>Clear Accountability (Slide 08):</strong> Clear accountability prevents duplicated effort and ensures decisions are made at the appropriate level across all 8 ERP project roles.
+        </div>
+        <div class="card">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>ERP Project Role</th>
+                            <th>Core Mandate</th>
+                            <th>Detailed Responsibilities</th>
+                        </tr>
+                    </thead>
+                    <tbody id="erpRolesTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 09 -->
+    <div class="imp-subpanel" id="tab-training">
+        <div class="imp-note-banner">
+            <strong>Change Support & Training (Slide 09):</strong> Effective change support improves confidence, encourages adoption and reduces dependence on old procedures. Train on business processes and <em>why</em> tasks change—not just button sequences.
+        </div>
+        <div class="imp-card-grid" id="trainingPrinciplesGrid"></div>
+
+        <div class="card card-body">
+            <h3>Role-Specific Training & Delivery Formats</h3>
+            <p style="margin-bottom:14px">Flexible training formats from Slide 09: Virtual/Web training, Computer-based modules, Video courses, Self-study books, and Pop-up help.</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Target Function</th>
+                            <th>Focus Areas (Screens, Transactions & Reports)</th>
+                            <th>Delivery Formats</th>
+                            <th>Post-Implementation Continuation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="model">Production & Shop Floor</td>
+                            <td>Work order screens, BOM transactions, shift output reports</td>
+                            <td>Video courses, Pop-up help, Hands-on sandbox</td>
+                            <td>Setup adjustments, routine transactions & report generation</td>
+                        </tr>
+                        <tr>
+                            <td class="model">Procurement & Warehouse</td>
+                            <td>PO screens, goods receipt transactions, stock & reorder reports</td>
+                            <td>Computer-based modules, Self-study books</td>
+                            <td>Vendor setup, routine stock movements & audit reports</td>
+                        </tr>
+                        <tr>
+                            <td class="model">Finance & Sales</td>
+                            <td>Costing, invoicing transactions, margin & demand reports</td>
+                            <td>Virtual web training, Pop-up help</td>
+                            <td>Period configuration, billing transactions & custom reports</td>
+                        </tr>
+                        <tr>
+                            <td class="model">IT & Functional Leads</td>
+                            <td>System configuration, user access, database & report builder</td>
+                            <td>Vendor workshops, Self-study manuals</td>
+                            <td>System setup & configuration, custom report generation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODULE E: POST-IMPLEMENTATION SUPPORT & MAINTENANCE (SLIDE 10) -->
+<div class="page" id="imp-post">
+    <div class="page-title">
+        <div>
+            <h2>Post-Implementation: Support, Maintenance & Lifecycle Budgeting</h2>
+            <p>Ongoing support operations from go-live until retirement, plus the 25% maintenance and 25–33% upgrade cost estimator.</p>
+        </div>
+        <span class="status status-info">Slide 10</span>
+    </div>
+
+    <div class="imp-note-banner">
+        <strong>Lifecycle Continuity (Slide 10):</strong> ERP maintenance begins at go-live and continues until retirement. Ongoing support preserves system reliability, involves both the organisation and the vendor, and ensures ERP continues to meet business needs.
+    </div>
+
+    <!-- Lifecycle Budget Calculator (25% Maintenance / 25-33% Upgrade from Slide 10) -->
+    <div class="card card-body" style="margin-bottom:20px">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px">
+            <div>
+                <h3>ERP Lifecycle Maintenance & Upgrade Budget Estimator</h3>
+                <p>Based on Slide 10 text benchmarks: ~25% annual maintenance and ~25–33% upgrade cost of initial implementation</p>
+            </div>
+            <span class="status status-success">Slide 10 Financial Benchmark</span>
+        </div>
+        <div class="filter-bar" style="flex-wrap:wrap;align-items:flex-end">
+            <label style="font-size:12px;font-weight:700;color:var(--muted)">
+                Initial Implementation Cost (₹ Lakhs)
+                <input class="form-control" id="impInitCostInput" type="number" value="200" min="1" oninput="calcMaintenanceBudget()" style="margin-top:4px;max-width:220px">
+            </label>
+            <button type="button" class="btn btn-primary" onclick="calcMaintenanceBudget()">Recalculate Lifecycle Costs</button>
+        </div>
+        <div class="module-grid" style="margin-bottom:0">
+            <div class="card stat-box">
+                <small>Estimated Annual Maintenance (~25%)</small>
+                <strong id="estAnnualMaint">₹50.00 Lakhs / yr</strong>
+            </div>
+            <div class="card stat-box">
+                <small>Upgrade Cost Low Estimate (25%)</small>
+                <strong id="estUpgradeLow">₹50.00 Lakhs</strong>
+            </div>
+            <div class="card stat-box">
+                <small>Upgrade Cost High Estimate (33%)</small>
+                <strong id="estUpgradeHigh">₹66.00 Lakhs</strong>
+            </div>
+            <div class="card stat-box">
+                <small>Post-Impact Review Window</small>
+                <strong>1 – 2 Years Post Go-Live</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="imp-card-grid" id="postSupportGrid"></div>
+</div>
+
 </section>
 
 </main>
@@ -2075,7 +2628,7 @@ function logout() {
     document.getElementById('appMain').style.display = 'none';
     document.getElementById('loginScreen').style.display = 'flex';
     document.querySelectorAll('.content > .page').forEach(page=>{page.style.display='';page.classList.remove('active');});
-    ['mainNav','managementNav','peopleNav'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='';});
+    ['mainNav','managementNav','peopleNav','implementationNav'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='';});
     document.querySelectorAll('#sidebar .nav-title').forEach(el=>el.style.display='');
     const departmentNav=document.getElementById('departmentNav');if(departmentNav)departmentNav.style.display='';
     document.getElementById('loginForm').reset();
@@ -2469,7 +3022,7 @@ function buildDepartmentNav(){
    const metricSet=workspace.metrics;
    page.innerHTML=`<div class="page-title"><div><h2>${d.icon} ${d.name} Workspace</h2><p>${description}</p></div><span class="role-pill">ROLE-SCOPED VIEW</span></div>
    <div class="module-intro"><h3>Welcome to ${d.name}</h3><p>${description} ${d.key==='admin'?'Use this central console to review all departments, system health, reports and access settings.':'This workspace shows only the tools and sample records relevant to this department.'}</p><div class="module-actions"><button class="btn btn-primary" onclick="departmentAction('${d.key}','${workspace.actions[0]}')">＋ ${workspace.actions[0]}</button><button class="btn btn-outline" onclick="departmentAction('${d.key}','Export report')">⇩ Export report</button><button class="btn btn-outline" onclick="departmentAction('${d.key}','Refresh workspace')">↻ Refresh data</button></div></div>
-   ${d.key==='admin'?`<div class="admin-overview-grid"><article class="admin-feature"><h4>🧭 All departments</h4><p>Jump into any department workspace from this administrator session.</p><div class="admin-dept-list">${departmentConfig.filter(x=>x.key!=='admin').map(x=>`<div class="admin-dept-item"><span>${x.icon}</span><span>${x.name}</span></div>`).join('')}</div></article><article class="admin-feature"><h4>🔐 Access & governance</h4><p>Review role access, account status and administrative settings.</p><div class="module-actions"><button class="btn btn-outline" onclick="departmentAction('admin','Review access matrix')">Review access matrix</button><button class="btn btn-outline" onclick="departmentAction('admin','Open system settings')">System settings</button></div></article><article class="admin-feature"><h4>🩺 System health</h4><p>Demo status for application availability, backup verification and alerts.</p><div class="activity-feed"><div class="activity-row"><span>🟢</span><div><strong>Application services</strong><small>Operational · demo status</small></div></div><div class="activity-row"><span>🟢</span><div><strong>Backup checks</strong><small>Last check successful · demo status</small></div></div><div class="activity-row"><span>🟠</span><div><strong>Open alerts</strong><small>17 items require review · sample data</small></div></div></div></article></div>`:''}
+   ${d.key==='admin'?`<div class="admin-overview-grid"><article class="admin-feature"><h4>🧭 All departments</h4><p>Jump into any department workspace from this administrator session.</p><div class="admin-dept-list">${departmentConfig.filter(x=>x.key!=='admin').map(x=>`<button type="button" class="admin-dept-item" data-page="dept-${x.key}" style="border:1px solid var(--border);text-align:left;width:100%"><span>${x.icon}</span><span>${x.name}</span></button>`).join('')}</div></article><article class="admin-feature"><h4>🔐 Access & governance</h4><p>Review role access, account status and administrative settings.</p><div class="module-actions"><button class="btn btn-outline" onclick="departmentAction('admin','Review access matrix')">Review access matrix</button><button class="btn btn-outline" onclick="departmentAction('admin','Open system settings')">System settings</button></div></article><article class="admin-feature"><h4>🩺 System health</h4><p>Demo status for application availability, backup verification and alerts.</p><div class="activity-feed"><div class="activity-row"><span>🟢</span><div><strong>Application services</strong><small>Operational · demo status</small></div></div><div class="activity-row"><span>🟢</span><div><strong>Backup checks</strong><small>Last check successful · demo status</small></div></div><div class="activity-row"><span>🟠</span><div><strong>Open alerts</strong><small>17 items require review · sample data</small></div></div></div></article></div>`:''}
    <div class="kpis">${metricSet.map((m,i)=>`<div class="card kpi"><div class="kpi-top">${m[0]}<div class="kpi-icon">${['▦','↗','!','✓'][i]}</div></div><div class="kpi-value">${m[1]}</div><div class="kpi-bottom">Sample ERP metric · demo data</div></div>`).join('')}</div>
    <div class="live-report-grid"><section class="live-report"><h3>📊 ${d.name} Activity</h3><p>Sample hourly activity — auto-refreshing demo data</p><div class="report-bars dept-bars" data-chart="${d.key}"></div></section><section class="live-report"><h3>🧾 ${d.name} Work Queue</h3><p>Tasks tailored to this department</p><div class="table-container"><table><thead><tr><th>Reference</th><th>Work item</th><th>Priority</th><th>Status</th></tr></thead><tbody>${workspace.tasks.map(t=>`<tr><td>${t[0]}</td><td>${t[1]}</td><td><span class="status ${t[2]==='High'?'status-warning':t[2]==='Medium'?'status-info':'status-success'}">${t[2]}</span></td><td><span class="status ${t[3]==='Pending'?'status-warning':t[3]==='In progress'?'status-info':'status-success'}">${t[3]}</span></td></tr>`).join('')}</tbody></table></div></section></div>
    <section class="card"><div class="card-header"><div><h3>${d.name} Checklist</h3><p>Role-specific tasks for the current shift (demo state)</p></div></div><div class="card-body activity-feed">${workspace.checklist.map(item=>`<label><input type="checkbox"> ${item}</label>`).join('')}</div></section>`;
@@ -2492,24 +3045,38 @@ function filterNavByRole(){
  const role=currentUser?.role;
  const deptTitle=document.getElementById('departmentNavTitle');
  const deptNav=document.getElementById('departmentNav');
+ const impNav=document.getElementById('implementationNav');
  const isAdmin=role==='admin';
  if(isAdmin){
    document.querySelectorAll('#sidebar nav button[data-page]').forEach(btn=>{btn.style.display='flex';btn.classList.remove('active');});
    document.querySelectorAll('#sidebar .nav-title').forEach(el=>el.style.display='block');
-   ['mainNav','managementNav','peopleNav'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='block';});
+   ['mainNav','managementNav','peopleNav','implementationNav'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='block';});
    if(deptTitle)deptTitle.style.display='block';
    if(deptNav)deptNav.style.display='block';
    return;
  }
+ const allowed = departmentPermissions[role] || ['dashboard', 'reports'];
  document.querySelectorAll('#sidebar nav button[data-page]').forEach(btn=>{
-   const isOwnDepartment=btn.dataset.page===`dept-${role}`;
-   btn.style.display=isOwnDepartment?'flex':'none';
-   btn.classList.toggle('active',isOwnDepartment);
+   const pageId = btn.dataset.page;
+   const isOwnDepartment = pageId === `dept-${role}`;
+   const isImpPage = pageId.startsWith('imp-');
+   const isAllowedModule = allowed.includes(pageId);
+   const visible = isOwnDepartment || isImpPage || isAllowedModule;
+   btn.style.display = visible ? 'flex' : 'none';
+   btn.classList.toggle('active', pageId === 'dashboard');
  });
- document.querySelectorAll('#sidebar .nav-title').forEach(el=>el.style.display='none');
+ document.querySelectorAll('#sidebar .nav-title').forEach(el=>el.style.display='block');
+ ['mainNav','managementNav','peopleNav','implementationNav'].forEach(id=>{
+   const navEl = document.getElementById(id);
+   if (!navEl) return;
+   const hasVisibleBtn = [...navEl.querySelectorAll('button[data-page]')].some(b => b.style.display !== 'none');
+   navEl.style.display = hasVisibleBtn ? 'block' : 'none';
+   if (navEl.previousElementSibling && navEl.previousElementSibling.classList.contains('nav-title')) {
+     navEl.previousElementSibling.style.display = hasVisibleBtn ? 'block' : 'none';
+   }
+ });
  if(deptTitle)deptTitle.style.display='block';
  if(deptNav)deptNav.style.display='block';
- ['mainNav','managementNav','peopleNav'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
 }
 
 const originalLogin=login;
@@ -2520,36 +3087,43 @@ login=function(userObj){
  if(name)name.textContent=`Welcome to ${userObj.name}'s workspace`;
  if(para)para.textContent=moduleDescriptions[userObj.role]||userObj.description||'Your department workspace is ready.';
  const isMd=userObj.role==='md';
- document.querySelectorAll('.page').forEach(page=>page.classList.remove('active'));
+ filterNavByRole();
  if(userObj.role==='admin') {
-   document.querySelectorAll('.content > .page').forEach(page=>{page.style.display='';});
-   const adminPage=document.getElementById('dept-admin');if(adminPage){adminPage.style.display='block';adminPage.classList.add('active');}
+   showPage('dept-admin');
    document.getElementById('executiveLiveReports').style.display='grid';
  } else {
-   document.querySelectorAll('.content > .page').forEach(page=>{page.style.display='none';});
-   document.querySelectorAll('.content > .page').forEach(page=>{if(page.id===`dept-${userObj.role}`){page.style.display='block';page.classList.add('active');}});
+   showPage('dashboard');
    document.getElementById('executiveLiveReports').style.display=(isMd||userObj.role==='finance'||userObj.role==='production')?'grid':'none';
  }
  renderRoleInsights();
- filterNavByRole();
- const deptButton=document.querySelector(`#departmentNav button[data-dept="${userObj.role}"]`);
- if(deptButton)deptButton.classList.add('active');
 };
 const originalShowPage=showPage;
 showPage=function(pageId){
  if(!currentUser){return;}
  const ownPage=`dept-${currentUser.role}`;
- if(currentUser.role==='admin'){
-   originalShowPage(pageId);
-   document.querySelectorAll('.content > .page').forEach(page=>{page.style.display='';});
-   if(pageId==='dept-admin'){document.querySelectorAll('.content > .page').forEach(page=>page.classList.toggle('active',page.id==='dept-admin'));}
+ const allowed = departmentPermissions[currentUser.role] || ['dashboard', 'reports'];
+ const isPermitted = currentUser.role === 'admin' || pageId === ownPage || pageId.startsWith('imp-') || allowed.includes(pageId);
+ if(!isPermitted){
+   toast('Workspace restricted',`You are signed in as ${currentUser.name}. That module is not assigned to your role.`);
    return;
  }
- if(pageId==='dashboard' && !document.getElementById(ownPage)?.classList.contains('active')){return;}
- if(pageId!==ownPage){toast('Workspace restricted',`You are signed in as ${currentUser.name}. Only your department workspace is available in this session.`);return;}
- originalShowPage(pageId);
- document.querySelectorAll('.content > .page').forEach(page=>{page.style.display=page.id===ownPage?'block':'none';});
- document.getElementById(ownPage)?.classList.add('active');
+ document.querySelectorAll('.content > .page').forEach(page=>{
+   const isTarget = page.id === pageId;
+   page.classList.toggle('active', isTarget);
+   page.style.display = isTarget ? 'block' : 'none';
+ });
+ document.querySelectorAll('#sidebar button[data-page]').forEach(btn=>{
+   btn.classList.toggle('active', btn.dataset.page === pageId);
+ });
+ if (pageId === 'dashboard') {
+   animateCounters();
+   renderTrend();
+ }
+ const execReports = document.getElementById('executiveLiveReports');
+ const execBottom = execReports ? execReports.nextElementSibling : null;
+ const showExec = pageId === 'dashboard' && (currentUser.role === 'admin' || currentUser.role === 'md' || currentUser.role === 'finance' || currentUser.role === 'production');
+ if (execReports) execReports.style.display = showExec ? 'grid' : 'none';
+ if (execBottom && execBottom.classList.contains('grid-two')) execBottom.style.display = showExec ? 'grid' : 'none';
 };
 function makeBars(container,values,labels){
  if(!container)return;
@@ -2583,11 +3157,320 @@ document.addEventListener('input', function(event){
  }
 });
 
+/* ========================================================================= */
+/* ERP IMPLEMENTATION NOTES INTERACTIVE ENGINE (ALL 10 SLIDES)               */
+/* ========================================================================= */
+
+function switchImpTab(pageId, panelId, btnEl) {
+    const page = document.getElementById(pageId);
+    if (!page) return;
+    page.querySelectorAll('.imp-tab-btn').forEach(b => b.classList.remove('active'));
+    page.querySelectorAll('.imp-subpanel').forEach(p => p.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    const target = document.getElementById(panelId);
+    if (target) target.classList.add('active');
+}
+
+// Slide 03: Pre-Implementation Business Case Checklist (7 items)
+const businessCaseItems = [
+    { title: "1. Examine existing and future processes and business practices", desc: "Study how work is currently performed and how it should operate in future. This identifies the changes expected from ERP.", done: true },
+    { title: "2. Assess people's mindset, involvement and cooperation", desc: "ERP requires employees to accept new responsibilities and workflows. Their willingness to participate and cooperate influences readiness.", done: true },
+    { title: "3. Check availability of money, time and people", desc: "Estimate the budget, staff availability and time required for selection, configuration, data preparation, training and deployment.", done: true },
+    { title: "4. Evaluate sustainability, adaptability and feasibility", desc: "Determine whether the system can be supported over time, adapt to changing requirements and be implemented with available capabilities.", done: false },
+    { title: "5. Analyse strategic needs and the competitive environment", desc: "Consider organisational goals, industry pressures and competition. ERP should support long-term direction, not be adopted merely because it is popular.", done: false },
+    { title: "6. Estimate costs, benefits and return on investment", desc: "Compare implementation and operating costs with expected benefits. ROI helps management judge whether the proposed investment is worthwhile.", done: false },
+    { title: "7. Select a product that fits requirements and limits customisation", desc: "A close match between business needs and standard ERP functions reduces extra programming, complexity and potential upgrade difficulties.", done: false }
+];
+
+function renderBusinessCase() {
+    const container = document.getElementById('businessCaseChecklist');
+    const badge = document.getElementById('bcScoreBadge');
+    if (!container) return;
+    const completed = businessCaseItems.filter(i => i.done).length;
+    if (badge) badge.textContent = `${completed} / ${businessCaseItems.length} Verified`;
+    container.innerHTML = businessCaseItems.map((item, idx) => `
+        <label class="imp-check-row" style="cursor:pointer">
+            <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleBusinessCase(${idx})">
+            <div>
+                <strong style="display:block;font-size:13.5px">${item.title}</strong>
+                <small style="color:var(--muted);font-size:12.5px">${item.desc}</small>
+            </div>
+        </label>
+    `).join('');
+}
+
+function toggleBusinessCase(idx) {
+    businessCaseItems[idx].done = !businessCaseItems[idx].done;
+    renderBusinessCase();
+    toast("Business Case Updated", "Pre-implementation readiness criterion toggled.");
+}
+
+// Slide 04: 8-Step ERP Implementation Methodology
+const methodologySteps = [
+    { step: "STEP 01", title: "Identify the business need for an ERP package", desc: "Clarify the problem ERP should solve, such as fragmented information, slow reporting, duplicated work, high costs or poor coordination." },
+    { step: "STEP 02", title: "Evaluate the current ('as-is') business situation", desc: "Document existing workflows, including process duration, decision points, departments involved, information movement and reporting requirements." },
+    { step: "STEP 03", title: "Define the desired ('to-be') business situation", desc: "Describe how processes should operate after improvement. Targets may relate to cost, quality, lead time, service and information flow." },
+    { step: "STEP 04", title: "Re-engineer processes to achieve the desired results", desc: "Redesign workflows to remove unnecessary steps, reduce delays and simplify decisions. ERP should not merely automate inefficient practices." },
+    { step: "STEP 05", title: "Evaluate ERP packages and finalise the best-fit option", desc: "Compare packages for industry suitability, functionality, price, modularity, implementation ease, vendor development and support." },
+    { step: "STEP 06", title: "Install the required hardware and networks", desc: "Prepare the computing, storage and communication infrastructure needed to run ERP reliably and connect users and locations." },
+    { step: "STEP 07", title: "Select implementation consultants", desc: "Choose consultants with relevant ERP skills, industry experience, a credible installation record and fees suited to the project." },
+    { step: "STEP 08", title: "Implement, test, train users and migrate to the new system", desc: "Configure the package, transfer and validate data, test transactions, train users and move to the new system after readiness checks." }
+];
+
+function renderMethodology() {
+    const grid = document.getElementById('methodologyGrid');
+    if (!grid) return;
+    grid.innerHTML = methodologySteps.map(s => `
+        <div class="imp-point-card">
+            <div>
+                <span class="imp-step-badge">${s.step}</span>
+                <h4>${s.title}</h4>
+                <p style="margin-top:6px">${s.desc}</p>
+            </div>
+            <div class="imp-why">Technology choices follow understanding of business needs & target processes.</div>
+        </div>
+    `).join('');
+}
+
+// Slide 05: Interactive Gap Analysis Register
+const processGaps = [
+    { id: "GAP-01", func: "Production", desc: "Automated serial barcode validation at Line 6 packing station", effort: "Small", authority: "Project Team (Minor Gap)" },
+    { id: "GAP-02", func: "Procurement", desc: "Multi-tier vendor lead-time risk scoring integration", effort: "Extensive", authority: "Steering Committee Escalation" },
+    { id: "GAP-03", func: "Quality", desc: "Legacy analog thermal chamber direct hardware signal tap", effort: "Not Feasible", authority: "Steering Committee (Process Change)" }
+];
+
+function renderGapTable() {
+    const tbody = document.querySelector('#gapAnalysisTable tbody');
+    if (!tbody) return;
+    tbody.innerHTML = processGaps.map((g, i) => {
+        const cls = g.effort === 'Small' ? 'status-success' : (g.effort === 'Extensive' ? 'status-warning' : 'status-danger');
+        return `
+            <tr>
+                <td class="model">${g.id}</td>
+                <td>${g.func}</td>
+                <td>${g.desc}</td>
+                <td><span class="status ${cls}">${g.effort}</span></td>
+                <td>${g.authority}</td>
+                <td><button type="button" class="btn btn-outline btn-small" onclick="removeGapItem(${i})">Resolve</button></td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function addGapItem() {
+    const funcEl = document.getElementById('gapFuncInput');
+    const descEl = document.getElementById('gapDescInput');
+    const effortEl = document.getElementById('gapEffortInput');
+    const func = (funcEl?.value || '').trim();
+    const desc = (descEl?.value || '').trim();
+    const effort = effortEl?.value || 'Small';
+    if (!func || !desc) {
+        toast("Details Required", "Please enter both Business Function and Gap Description.");
+        return;
+    }
+    const authority = effort === 'Small' ? 'Project Team (Minor Gap)' : 'Steering Committee Escalation';
+    processGaps.unshift({
+        id: `GAP-${String(processGaps.length + 1).padStart(2, '0')}`,
+        func,
+        desc,
+        effort,
+        authority
+    });
+    if (funcEl) funcEl.value = '';
+    if (descEl) descEl.value = '';
+    renderGapTable();
+    toast("Process Gap Logged", `Classified as '${effort}' and routed to ${authority}.`);
+}
+
+function removeGapItem(index) {
+    const removed = processGaps.splice(index, 1)[0];
+    renderGapTable();
+    toast("Gap Closed", `${removed.id} marked as resolved.`);
+}
+
+// Slide 06: Implementation Activities: From Setup to Go-Live (8 items)
+const goliveActivities = [
+    { title: "1. Form a cross-functional implementation team and steering committee", desc: "Include knowledgeable users, IT personnel and consultants. The steering committee monitors progress, resolves issues and supports resource allocation.", done: true },
+    { title: "2. Prepare a detailed plan, schedule and resource allocation", desc: "Define activities, responsibilities, dependencies, milestones and resources. Project planning methods such as PERT charts can track progress.", done: true },
+    { title: "3. Configure the system and develop required reports or transactions", desc: "Set up ERP functions to reflect approved processes. Develop user-specific reports and transactions where standard features are insufficient.", done: true },
+    { title: "4. Transfer and validate master and transaction data", desc: "Move essential records from existing systems into ERP. Check mapping, completeness and accuracy through trial transfers.", done: true },
+    { title: "5. Run sample transactions and correct errors", desc: "Test representative business transactions to confirm configuration and data produce expected results. Correct problems before wider use.", done: false },
+    { title: "6. Train users and operate old and new systems in parallel", desc: "Train users by function and process transactions in both systems. Comparing results helps identify problems before the final switch.", done: false },
+    { title: "7. Obtain user concurrence before migration and go-live", desc: "When parallel operations are satisfactory and errors are resolved, obtain user approval as a readiness check before migration.", done: false },
+    { title: "8. Provide user documentation, support and system fine-tuning", desc: "Prepare instructions specific to organisational processes, answer user queries and monitor performance. Fine-tuning improves operational reliability.", done: false }
+];
+
+function renderGoliveChecklist() {
+    const container = document.getElementById('goliveChecklistContainer');
+    const badge = document.getElementById('goliveReadinessBadge');
+    if (!container) return;
+    const completed = goliveActivities.filter(a => a.done).length;
+    if (badge) {
+        badge.textContent = `${completed} / ${goliveActivities.length} Controls Complete`;
+        badge.className = `status ${completed === goliveActivities.length ? 'status-success' : 'status-warning'}`;
+    }
+    container.innerHTML = goliveActivities.map((act, idx) => `
+        <label class="imp-check-row" style="cursor:pointer">
+            <input type="checkbox" ${act.done ? 'checked' : ''} onchange="toggleGoliveActivity(${idx})">
+            <div>
+                <strong style="display:block;font-size:13.5px">${act.title}</strong>
+                <small style="color:var(--muted);font-size:12.5px">${act.desc}</small>
+            </div>
+        </label>
+    `).join('');
+}
+
+function toggleGoliveActivity(idx) {
+    goliveActivities[idx].done = !goliveActivities[idx].done;
+    renderGoliveChecklist();
+    toast("Go-Live Gate Updated", "Setup to Go-Live control status updated.");
+}
+
+// Slide 07: Strategies for Successful ERP Implementation (7 items)
+const successStrategies = [
+    { num: 1, title: "Prioritise user needs over technology for most decisions", desc: "ERP should help people perform business activities better. Design and configuration decisions should respond to practical user requirements." },
+    { num: 2, title: "Use a technology-led focus when requirements are mature and precise", desc: "A stronger technology focus is appropriate when technical capabilities are understood and detailed specifications can be defined clearly." },
+    { num: 3, title: "Secure senior management support and a credible project champion", desc: "Senior leaders provide authority, resolve conflicts and maintain commitment. A respected champion sustains support across departments." },
+    { num: 4, title: "Build a multifunctional team with business and IT expertise", desc: "Include end users, internal IT specialists and business-process experts. A balanced team connects operational needs with technical decisions." },
+    { num: 5, title: "Use time-boxing; split large projects into smaller benefit-led stages", desc: "Set disciplined time limits and divide large implementations into manageable projects. Each stage should deliver tangible benefits and reduce risk." },
+    { num: 6, title: "Allow time for employees to adjust to new ways of working", desc: "Employees need time to understand changed roles and processes. A rapid transition may leave users unprepared." },
+    { num: 7, title: "Use consultants for expertise, while retaining control of core knowledge", desc: "Consultants contribute experience, but the organisation should retain ownership of its business knowledge and control over important innovations." }
+];
+
+function renderStrategies() {
+    const grid = document.getElementById('strategiesGrid');
+    if (!grid) return;
+    grid.innerHTML = successStrategies.map(s => `
+        <div class="imp-point-card">
+            <div>
+                <h4><span class="imp-point-num">${s.num}</span>${s.title}</h4>
+                <p style="margin-top:6px">${s.desc}</p>
+            </div>
+            <div class="imp-why">Strengthens ownership, reduces disruption & aligns with business value.</div>
+        </div>
+    `).join('');
+}
+
+// Slide 08: ERP Team: Roles and Responsibilities (8 roles)
+const erpTeamRoles = [
+    { num: 1, role: "Project Sponsor", mandate: "Owns vision, priorities, scope and final budget authority", details: "Provides direction, promotes the project, approves priorities and scope, and has ultimate authority over the project budget." },
+    { num: 2, role: "Steering Committee", mandate: "Commits resources, reviews progress and resolves escalations", details: "Monitors progress and organisational impact, reviews deliverables, commits resources and decides issues escalated by the project team." },
+    { num: 3, role: "Project Manager", mandate: "Owns deliverables, schedule, resources and daily coordination", details: "Maintains the plan, coordinates resources, communicates status, anticipates deviations and takes corrective action." },
+    { num: 4, role: "Project Coordinator", mandate: "Supports management and project communication", details: "Assists the project manager, maintains records and communicates project goals, milestones and status to relevant groups." },
+    { num: 5, role: "Functional Owner", mandate: "Validates business objectives and functional requirements", details: "Manages a business area's deliverables, documents existing processes and works with users to validate future design." },
+    { num: 6, role: "Process Team", mandate: "Maps 'as-is' and designs 'to-be' processes", details: "Documents current workflows, facilitates redesign workshops and works with functional teams to incorporate suitable ERP practices." },
+    { num: 7, role: "Functional Team", mandate: "Configures modules, tests and trains users", details: "Configures ERP modules, participates in testing, validates business design and prepares user documentation and training." },
+    { num: 8, role: "Technical Team", mandate: "Handles data conversion, interfaces, reports and testing", details: "Develops and tests data-conversion and interface programmes, custom reports and forms, and supports performance testing." }
+];
+
+function renderErpRoles() {
+    const tbody = document.getElementById('erpRolesTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = erpTeamRoles.map(r => `
+        <tr>
+            <td><strong>0${r.num}</strong></td>
+            <td class="model">${r.role}</td>
+            <td><span class="status status-info">${r.mandate}</span></td>
+            <td>${r.details}</td>
+        </tr>
+    `).join('');
+}
+
+// Slide 09: User Training and Change Management (8 principles)
+const trainingPrinciples = [
+    { num: 1, title: "User training is critical to making ERP work after installation", desc: "Installing software is not enough. Employees must learn to use it correctly; inadequate training can become a major source of problems." },
+    { num: 2, title: "Train users on business processes, not only software commands", desc: "Training should explain the workflow and business purpose behind each task. Users need to understand how actions affect other functions." },
+    { num: 3, title: "Explain why tasks change, not just which buttons to press", desc: "Explaining reasons for new procedures helps users understand benefits and responsibilities instead of merely memorising command sequences." },
+    { num: 4, title: "Avoid short training programmes and reverting to old methods", desc: "Insufficient practice leaves employees uncertain. Support users in adopting the new system rather than bypassing it and returning to old methods." },
+    { num: 5, title: "Provide role-specific training for each function", desc: "Different users perform different ERP tasks. Focus training on the screens, transactions, reports and responsibilities relevant to each group." },
+    { num: 6, title: "Use web, computer-based, video and self-study formats", desc: "Flexible options include virtual training, computer-based modules, video courses, self-study books and pop-up help." },
+    { num: 7, title: "Plan training needs, skill-gap assessment, materials and schedules", desc: "Identify who needs training, assess skills and learning gaps, document requirements and prepare a realistic development and delivery schedule." },
+    { num: 8, title: "Continue training on setup, transactions and report generation", desc: "After implementation, teach system setup and configuration, routine transaction processing and report generation so users can work independently." }
+];
+
+function renderTrainingPrinciples() {
+    const grid = document.getElementById('trainingPrinciplesGrid');
+    if (!grid) return;
+    grid.innerHTML = trainingPrinciples.map(t => `
+        <div class="imp-point-card">
+            <div>
+                <h4><span class="imp-point-num">${t.num}</span>${t.title}</h4>
+                <p style="margin-top:6px">${t.desc}</p>
+            </div>
+            <div class="imp-why">Improves confidence, encourages adoption & reduces dependence on old procedures.</div>
+        </div>
+    `).join('');
+}
+
+// Slide 10: Post-Implementation: Support and Maintenance (8 points + budget calculator)
+const postSupportPoints = [
+    { num: 1, title: "ERP maintenance begins at go-live and continues until retirement", desc: "Maintenance covers activities throughout the system's operational life, from go-live until it is withdrawn from production." },
+    { num: 2, title: "Monitor performance and fine-tune databases and administration", desc: "IT personnel should monitor system behaviour, database performance and administrative settings, making adjustments to maintain reliable performance." },
+    { num: 3, title: "Provide user help and make minor report or layout changes", desc: "Post-implementation support addresses user queries and small operational changes, including report formats and printed documents such as purchase orders." },
+    { num: 4, title: "Maintenance and upgrades involve both the organisation and vendor", desc: "ERP is vendor-supplied software, but maintenance is not solely the vendor's responsibility. The organisation and supplier both influence support and upgrades." },
+    { num: 5, title: "Annual maintenance estimated at ~25% of initial cost", desc: "The text estimates annual maintenance as approximately one-quarter (25%) of initial implementation cost (text benchmark, not a universal rate)." },
+    { num: 6, title: "Upgrades estimated at ~25–33% of initial implementation cost", desc: "Upgrade costs may reach roughly one-quarter to one-third (25–33%) of the original implementation cost, highlighting lifecycle budgeting." },
+    { num: 7, title: "Review financial, operational and organisational impact", desc: "Assess whether ERP improved business performance, resource use and organisational functioning. Compare outcomes with the objectives in the business case." },
+    { num: 8, title: "Plan upgrades and future improvements as business needs change", desc: "Review changing processes and technology needs, then plan improvements and upgrades to keep ERP useful and aligned with organisational needs." }
+];
+
+function renderPostSupport() {
+    const grid = document.getElementById('postSupportGrid');
+    if (!grid) return;
+    grid.innerHTML = postSupportPoints.map(p => `
+        <div class="imp-point-card">
+            <div>
+                <h4><span class="imp-point-num">${p.num}</span>${p.title}</h4>
+                <p style="margin-top:6px">${p.desc}</p>
+            </div>
+            <div class="imp-why">Preserves system reliability & ensures ERP continues to meet business needs.</div>
+        </div>
+    `).join('');
+}
+
+function calcMaintenanceBudget() {
+    const initCost = Math.max(0, Number(document.getElementById('impInitCostInput')?.value) || 0);
+    const annualMaint = (initCost * 0.25).toFixed(2);
+    const upgradeLow = (initCost * 0.25).toFixed(2);
+    const upgradeHigh = (initCost * 0.33).toFixed(2);
+    const mEl = document.getElementById('estAnnualMaint');
+    const lEl = document.getElementById('estUpgradeLow');
+    const hEl = document.getElementById('estUpgradeHigh');
+    if (mEl) mEl.textContent = `₹${annualMaint} Lakhs / yr`;
+    if (lEl) lEl.textContent = `₹${upgradeLow} Lakhs`;
+    if (hEl) hEl.textContent = `₹${upgradeHigh} Lakhs`;
+}
+
 buildDepartmentLogin();
 buildDepartmentNav();
 refreshLiveReports();
 setInterval(refreshLiveReports,15000);
 
+// Initialize ERP Implementation Notes Modules
+renderBusinessCase();
+renderMethodology();
+renderGapTable();
+renderGoliveChecklist();
+renderStrategies();
+renderErpRoles();
+renderTrainingPrinciples();
+renderPostSupport();
+calcMaintenanceBudget();
+
+// Wire up Inventory Search & Stock Filter
+function filterInventoryTable() {
+    const q = (document.getElementById('inventorySearch')?.value || '').toLowerCase();
+    const level = document.getElementById('inventoryFilter')?.value || 'all';
+    document.querySelectorAll('#inventoryTable tbody tr').forEach(row => {
+        const text = row.innerText.toLowerCase();
+        const isLow = text.includes('low stock');
+        const matchesQuery = text.includes(q);
+        const matchesLevel = level === 'all' || (level === 'low' && isLow) || (level === 'healthy' && !isLow);
+        row.style.display = (matchesQuery && matchesLevel) ? '' : 'none';
+    });
+}
+document.getElementById('inventorySearch')?.addEventListener('input', filterInventoryTable);
+document.getElementById('inventoryFilter')?.addEventListener('change', filterInventoryTable);
 
 // Initialize
 renderOrders();

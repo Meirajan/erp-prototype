@@ -1690,6 +1690,7 @@ body { min-width: 320px; }
         <button type="button" data-page="tasks" data-role="admin,production,hr"><span class="nav-icon">☷</span> Task Assignments & Team Work</button>
         <button type="button" data-page="machines" data-role="admin,production"><span class="nav-icon">▦</span> Machine Performance</button>
         <button type="button" data-page="bom" data-role="admin,production,inventory"><span class="nav-icon">☷</span> Parts List & BOM Builder</button>
+        <button type="button" data-page="uom-master" data-role="admin,production,inventory"><span class="nav-icon">⚖</span> Industry & UoM Master</button>
         <button type="button" data-page="crm" data-role="admin,sales"><span class="nav-icon">◎</span> Customer Orders & CRM</button>
         </nav>
         <div class="nav-title">People & Factory Operations</div>
@@ -2032,153 +2033,131 @@ body { min-width: 320px; }
 <div class="page" id="tasks"><div class="page-title"><div><h2>Task Assignments & Team Work Hub</h2><p>Assign operational work, monitor progress and identify delayed tasks across departments.</p></div><button class="btn btn-primary" onclick="addTask()">＋ Assign Task</button></div><div class="module-grid"><div class="card stat-box"><small>Total Tasks</small><strong id="taskTotal">9</strong></div><div class="card stat-box"><small>In Progress</small><strong>5</strong></div><div class="card stat-box"><small>Awaiting Approval</small><strong>1</strong></div><div class="card stat-box"><small>Completed</small><strong>3</strong></div></div><div class="grid-three" id="departmentCards"><div class="card card-body"><h3>SMT & PCB Production</h3><p>Manager: Rajesh Sharma</p><div class="progress-track"><div class="progress-bar" style="width:65%"></div></div><small>65% complete · Critical risk</small></div><div class="card card-body"><h3>Warehouse & Inventory</h3><p>Manager: Kavita Patel</p><div class="progress-track"><div class="progress-bar" style="width:90%"></div></div><small>90% complete · Healthy</small></div><div class="card card-body"><h3>Quality Assurance</h3><p>Manager: Arun Verma</p><div class="progress-track"><div class="progress-bar" style="width:50%"></div></div><small>50% complete · Needs attention</small></div></div><div class="card"><div class="table-container"><table id="taskTable"><thead><tr><th>Task ID</th><th>Task / Description</th><th>Department</th><th>Assigned To</th><th>Priority</th><th>Progress</th><th>Status</th></tr></thead><tbody><tr><td>TSK-104</td><td>Verify incoming display panels</td><td>Quality</td><td>Priya K.</td><td>High</td><td>70%</td><td><span class="status status-warning">In Progress</span></td></tr><tr><td>TSK-105</td><td>Reconcile SSD stock</td><td>Warehouse</td><td>Raj M.</td><td>Medium</td><td>100%</td><td><span class="status status-success">Completed</span></td></tr></tbody></table></div></div></div>
 <div class="page" id="machines"><div class="page-title"><div><h2>Factory Production & Machine Overview</h2><p>Monitor six assembly lines, first-pass quality and workstation performance.</p></div><span class="status status-success">6 / 6 Lines Active</span></div><div class="kpis"><div class="card kpi"><div class="kpi-top">Units Assembled Today</div><div class="kpi-value">7,080 / 7,600</div><div class="kpi-bottom">93.1% of shift target</div></div><div class="card kpi"><div class="kpi-top">First-Time Quality</div><div class="kpi-value">99.4%</div><div class="kpi-bottom">24 defects per million</div></div><div class="card kpi"><div class="kpi-top">Serial Registry</div><div class="kpi-value">100%</div><div class="kpi-bottom">7,210 units verified</div></div><div class="card kpi"><div class="kpi-top">Critical Chip Stock</div><div class="kpi-value">4.2 days</div><div class="kpi-bottom">Reorder recommended</div></div></div><div class="card card-body"><h3>Smartphone / Laptop Assembly Stages</h3><div class="progress-list" id="machineLines"></div></div></div>
 <div class="page" id="bom"><div class="page-title"><div><h2>Multi-Level Bill of Materials (BOM) Builder</h2><p>Hierarchical sub-assembly breakdown, raw material costs and revision control.</p></div><button class="btn btn-primary" onclick="addBomPart()">＋ Add BOM Part</button></div><div class="card card-body"><div class="filter-bar"><label>Active BOM <select class="form-control"><option>VB-2026-0042 · Vivobook 15 Master BOM · Rev C</option><option>VB-2026-0048 · Vivobook S 14 BOM · Rev A</option></select></label><span class="status status-success">Released</span></div><div class="module-grid"><div class="card stat-box"><small>Components</small><strong id="bomCount">7</strong></div><div class="card stat-box"><small>Estimated Unit Cost</small><strong>₹20,200</strong></div><div class="card stat-box"><small>Revision</small><strong>Rev C</strong></div></div><div class="table-container"><table id="bomTable"><thead><tr><th>Level / Part Number</th><th>Description</th><th>Category</th><th>Qty / UOM</th><th>Unit Cost</th><th>Extended Cost</th><th>Material</th></tr></thead><tbody><tr><td>L0 · ASM-VB-15-001</td><td>Vivobook 15 Final Assembly</td><td>Sub-assembly</td><td>1 EA</td><td>₹20,200</td><td>₹20,200</td><td>Complete laptop</td></tr><tr><td>L1 · CPU-I5-13420H</td><td>Intel Core i5 Processor</td><td>Electronics</td><td>1 EA</td><td>₹8,200</td><td>₹8,200</td><td>Semiconductor</td></tr><tr><td>L1 · DISP-156-FHD</td><td>15.6-inch FHD Panel</td><td>Display</td><td>1 EA</td><td>₹4,800</td><td>₹4,800</td><td>LCD assembly</td></tr><tr><td>L1 · RAM-16-DDR4</td><td>16GB RAM Module</td><td>Memory</td><td>1 EA</td><td>₹1,600</td><td>₹1,600</td><td>DDR4</td></tr><tr><td>L1 · SSD-512-NVME</td><td>512GB NVMe SSD</td><td>Storage</td><td>1 EA</td><td>₹1,300</td><td>₹1,300</td><td>NVMe</td></tr><tr><td>L1 · BAT-42WH</td><td>42Wh Battery Pack</td><td>Power</td><td>1 EA</td><td>₹1,250</td><td>₹1,250</td><td>Li-ion</td></tr><tr><td>L1 · CHASSIS-AL</td><td>Aluminium Chassis & Keyboard</td><td>Housing</td><td>1 SET</td><td>₹3,050</td><td>₹3,050</td><td>Aluminium alloy</td></tr></tbody></table></div></div></div>
-<div class="page" id="employees"><div class="page-title"><div><h2>Employee Directory & Digital Dossiers</h2><p>Employee records, department assignments, employment status and document tracking.</p></div><button class="btn btn-primary" onclick="addEmployee()">＋ Onboard Employee</button></div><div class="filter-bar"><input class="form-control" id="employeeSearch" placeholder="Search name, code or department..." oninput="filterEmployees()"><select class="form-control" id="employeeStatus" onchange="filterEmployees()"><option value="all">All statuses</option><option>Active</option><option>Probation</option><option>On Leave</option></select></div><div class="card"><div class="table-container"><table id="employeeTable"><thead><tr><th>Code / ID</th><th>Employee Name</th><th>Department & Designation</th><th>Status</th><th>Monthly Salary</th><th>Joining Date</th><th>Action</th></tr></thead><tbody><tr><td>EMP-001</td><td>Sunil Rao</td><td>Plant Operations Manager</td><td><span class="status status-success">Active</span></td><td>₹1,25,000</td><td>15 Mar 2022</td><td><button class="btn btn-outline btn-small" onclick="toast('Employee dossier','Demo employee record opened.')">View Dossier</button></td></tr><tr><td>EMP-002</td><td>Rajesh Mehra</td><td>Warehouse Supervisor</td><td><span class="status status-success">Active</span></td><td>₹72,000</td><td>10 Jan 2023</td><td><button class="btn btn-outline btn-small" onclick="toast('Employee dossier','Demo employee record opened.')">View Dossier</button></td></tr><tr><td>EMP-015</td><td>Amit Kalyan</td><td>CNC Machine Lead</td><td><span class="status status-success">Active</span></td><td>₹48,000</td><td>01 Jun 2024</td><td><button class="btn btn-outline btn-small" onclick="toast('Employee dossier','Demo employee record opened.')">View Dossier</button></td></tr><tr><td>EMP-042</td><td>Pooja Sharma</td><td>Quality Inspector</td><td><span class="status status-warning">Probation</span></td><td>₹32,000</td><td>18 Aug 2026</td><td><button class="btn btn-outline btn-small" onclick="toast('Employee dossier','Demo employee record opened.')">View Dossier</button></td></tr></tbody></table></div></div></div>
-<div class="page" id="crm"><div class="page-title"><div><h2>Customer Orders & CRM Command Hub</h2><p>Track customer opportunities, quotations, confirmed orders and delivery commitments.</p></div><button class="btn btn-primary" onclick="addLead()">＋ Capture New Lead</button></div><div class="kpis"><div class="card kpi"><div class="kpi-top">Active Pipeline</div><div class="kpi-value">₹1.42 Cr</div><div class="kpi-bottom">32 leads in progress</div></div><div class="card kpi"><div class="kpi-top">Won Revenue</div><div class="kpi-value">₹98 L</div><div class="kpi-bottom">24 confirmed orders</div></div><div class="card kpi"><div class="kpi-top">Win Conversion</div><div class="kpi-value">72.4%</div><div class="kpi-bottom">Above target</div></div><div class="card kpi"><div class="kpi-top">Client Retention</div><div class="kpi-value">94.8%</div><div class="kpi-bottom">Enterprise accounts</div></div></div><div class="grid-two"><div class="card card-body"><h3>Sales Pipeline Stages</h3><div class="progress-list"><div class="progress-item"><div class="progress-meta"><span>Discovery</span><strong>₹34 L</strong></div><div class="progress-track"><div class="progress-bar" style="width:72%"></div></div></div><div class="progress-item"><div class="progress-meta"><span>Technical Evaluation</span><strong>₹28.5 L</strong></div><div class="progress-track"><div class="progress-bar" style="width:60%"></div></div></div><div class="progress-item"><div class="progress-meta"><span>Quotation Submitted</span><strong>₹39 L</strong></div><div class="progress-track"><div class="progress-bar" style="width:84%"></div></div></div><div class="progress-item"><div class="progress-meta"><span>Negotiation</span><strong>₹26.5 L</strong></div><div class="progress-track"><div class="progress-bar" style="width:48%"></div></div></div></div></div><div class="card card-body"><h3>Confirmed Customer Orders</h3><div class="table-container"><table id="crmTable"><thead><tr><th>Order</th><th>Customer</th><th>Quantity</th><th>Value</th><th>Status</th></tr></thead><tbody><tr><td>SO-2026-0142</td><td>Bharat Forge</td><td>500</td><td>₹1,18,00,000</td><td><span class="status status-success">Scheduled</span></td></tr><tr><td>SO-2026-0144</td><td>Tata Auto Systems</td><td>250</td><td>₹84,00,000</td><td><span class="status status-info">Confirmed</span></td></tr></tbody></table></div></div></div></div>
-<div class="page" id="payroll"><div class="page-title"><div><h2>Staff Monthly Salaries & Wage Processing</h2><p>Track attendance, payroll runs, approvals and wage-processing status.</p></div><button class="btn btn-primary" onclick="addPayroll()">＋ Add Payroll Entry</button></div><div class="kpis"><div class="card kpi"><div class="kpi-top">Active Payroll Entries</div><div class="kpi-value" id="payrollCount">22</div><div class="kpi-bottom">Current pay cycle</div></div><div class="card kpi"><div class="kpi-top">On-Time Completion</div><div class="kpi-value">99.7%</div><div class="kpi-bottom">Within factory target</div></div><div class="card kpi"><div class="kpi-top">Urgent Approvals</div><div class="kpi-value">3</div><div class="kpi-bottom">Manager sign-off needed</div></div><div class="card kpi"><div class="kpi-top">Staff on Shift</div><div class="kpi-value">338</div><div class="kpi-bottom">Attendance verified</div></div></div><div class="card"><div class="table-container"><table id="payrollTable"><thead><tr><th>Tracking Code</th><th>Work Item / Description</th><th>Factory Section</th><th>Assigned Staff</th><th>Status Reading</th><th>Status</th><th>Action</th></tr></thead><tbody><tr><td>PAYR-2026-001</td><td>Monthly salary batch</td><td>Primary Stream</td><td>Payroll Admin</td><td>99.4% verified</td><td><span class="status status-success">Completed</span></td><td><button class="btn btn-outline btn-small" onclick="toast('Payroll','Entry signed off in demo.')">Sign Off</button></td></tr><tr><td>PAYR-2026-002</td><td>Shift overtime review</td><td>Assembly Line B</td><td>HR Manager</td><td>Awaiting sign-off</td><td><span class="status status-warning">Pending Review</span></td><td><button class="btn btn-outline btn-small" onclick="toast('Payroll','Review recorded in demo.')">Review</button></td></tr><tr><td>PAYR-2026-003</td><td>Attendance reconciliation</td><td>Quality Station 01</td><td>HR Executive</td><td>Variance +0.42%</td><td><span class="status status-danger">Flagged</span></td><td><button class="btn btn-outline btn-small" onclick="toast('Payroll','Flag opened for review.')">Review</button></td></tr></tbody></table></div></div></div>
-<div class="page" id="maintenance"><div class="page-title"><div><h2>Maintenance & Downtime</h2><p>Track preventive maintenance, breakdown reports and machine service schedules.</p></div><button class="btn btn-primary" onclick="toast('Maintenance request','Demo maintenance ticket created.')">＋ Raise Maintenance Ticket</button></div><div class="module-grid"><div class="card stat-box"><small>Machines Online</small><strong>42 / 45</strong></div><div class="card stat-box"><small>Open Work Orders</small><strong>6</strong></div><div class="card stat-box"><small>Mean Time to Repair</small><strong>38 min</strong></div><div class="card stat-box"><small>Planned Maintenance</small><strong>94%</strong></div></div><div class="card"><div class="table-container"><table><thead><tr><th>Machine ID</th><th>Machine</th><th>Line</th><th>Last Service</th><th>Next Service</th><th>Condition</th><th>Action</th></tr></thead><tbody><tr><td>MCH-014</td><td>Automated Screw Driver</td><td>Assembly A</td><td>02 Oct 2026</td><td>16 Oct 2026</td><td><span class="status status-success">Operational</span></td><td><button class="btn btn-outline btn-small" onclick="toast('Machine details','Maintenance history opened.')">View Log</button></td></tr><tr><td>MCH-022</td><td>Thermal Test Chamber</td><td>Quality B</td><td>21 Sep 2026</td><td>13 Oct 2026</td><td><span class="status status-warning">Service Due</span></td><td><button class="btn btn-primary btn-small" onclick="toast('Maintenance scheduled','Service visit added to demo schedule.')">Schedule</button></td></tr></tbody></table></div></div></div>
-<div class="page" id="shipping"><div class="page-title"><div><h2>Dispatch & Serial Number Registry</h2><p>Manage packed units, shipment tracking, warranty traceability and delivery status.</p></div><button class="btn btn-primary" onclick="toast('Dispatch created','A demo dispatch batch has been added.')">＋ Create Dispatch</button></div><div class="kpis"><div class="card kpi"><div class="kpi-top">Ready to Dispatch</div><div class="kpi-value">428</div></div><div class="card kpi"><div class="kpi-top">In Transit</div><div class="kpi-value">1,204</div></div><div class="card kpi"><div class="kpi-top">Delivered This Month</div><div class="kpi-value">8,492</div></div><div class="card kpi"><div class="kpi-top">Serials Verified</div><div class="kpi-value">100%</div></div></div><div class="card"><div class="table-container"><table><thead><tr><th>Dispatch ID</th><th>Customer</th><th>Model</th><th>Units</th><th>Tracking</th><th>Delivery Date</th><th>Status</th></tr></thead><tbody><tr><td>DSP-2026-310</td><td>Bharat Forge</td><td>Vivobook 15</td><td>500</td><td>TRK-IND-774201</td><td>16 Oct 2026</td><td><span class="status status-info">In Transit</span></td></tr><tr><td>DSP-2026-311</td><td>Tata Auto Systems</td><td>Vivobook S 14</td><td>250</td><td>TRK-IND-774228</td><td>18 Oct 2026</td><td><span class="status status-success">Packed</span></td></tr></tbody></table></div></div></div>
 
-<!-- ========================================================================= -->
-<!-- ERP IMPLEMENTATION NOTES MODULES (SLIDES 01 TO 10)                        -->
-<!-- ========================================================================= -->
-
-<!-- MODULE A: PURPOSE, LIFECYCLE & BUSINESS CASE (SLIDES 01, 02, 03) -->
-<div class="page" id="imp-overview">
+<!-- INDUSTRY & UNIT OF MEASUREMENT (UoM) MASTER -->
+<div class="page" id="uom-master">
     <div class="page-title">
         <div>
-            <h2>ERP Implementation: Purpose, Lifecycle & Business Case</h2>
-            <p>Core principles, lifecycle roadmap, rollout strategy selector, and 7-point business case evaluation.</p>
+            <h2>Industry Sectors & Unit of Measurement (UoM) Master</h2>
+            <p>Standardised measurement units across all 5 industrial verticals and 24 sub-industries for Inventory, BOM, and Procurement.</p>
         </div>
-        <span class="status status-info">Slides 01 – 03</span>
+        <button type="button" class="btn btn-primary" onclick="addCustomUomRow()">＋ Add Industry UoM Rule</button>
     </div>
 
-    <div class="imp-tabs">
-        <button type="button" class="imp-tab-btn active" onclick="switchImpTab('imp-overview','tab-purpose',this)">01. Purpose & Challenges</button>
-        <button type="button" class="imp-tab-btn" onclick="switchImpTab('imp-overview','tab-lifecycle',this)">02. Implementation Lifecycle</button>
-        <button type="button" class="imp-tab-btn" onclick="switchImpTab('imp-overview','tab-businesscase',this)">03. Build the Business Case</button>
-    </div>
-
-    <!-- SLIDE 01 -->
-    <div class="imp-subpanel active" id="tab-purpose">
-        <div class="imp-note-banner">
-            <strong>Core Principle (Slide 01):</strong> ERP success depends on <em>coordinated organisation-wide adoption, not software alone</em>. Review all 6 foundational pillars and operational risks below.
+    <div class="kpis">
+        <div class="card kpi">
+            <div class="kpi-top">Industry Sectors <div class="kpi-icon">🏭</div></div>
+            <div class="kpi-value">5</div>
+            <div class="kpi-bottom">Heavy, Process, Engg, Consumer, Health</div>
         </div>
-        <div class="imp-card-grid">
-            <div class="imp-point-card">
-                <div>
-                    <h4><span class="imp-point-num">1</span>ERP integrates functions, people and procedures</h4>
-                    <p>An ERP system connects activities such as purchasing, production, finance and human resources through shared information.</p>
-                </div>
-                <div class="imp-why">Why it matters: ERP success depends on coordinated organisation-wide adoption, not software alone.</div>
-            </div>
-            <div class="imp-point-card">
-                <div>
-                    <h4><span class="imp-point-num">2</span>Aims to improve profitability, efficiency and data accuracy</h4>
-                    <p>Integration can reduce duplicated work, improve resource use and provide reliable information for planning and managerial decisions.</p>
-                </div>
-                <div class="imp-why">Why it matters: ERP success depends on coordinated organisation-wide adoption, not software alone.</div>
-            </div>
-            <div class="imp-point-card">
-                <div>
-                    <h4><span class="imp-point-num">3</span>Implementation affects the entire organisation</h4>
-                    <p>ERP changes how departments exchange information and perform tasks, requiring coordination among users, managers, business functions and IT staff.</p>
-                </div>
-                <div class="imp-why">Why it matters: ERP success depends on coordinated organisation-wide adoption, not software alone.</div>
-            </div>
-            <div class="imp-point-card">
-                <div>
-                    <h4><span class="imp-point-num">4</span>Requires substantial time, resources and commitment</h4>
-                    <p>The organisation invests in software, infrastructure, consultants, employee time and training. Management commitment is needed throughout the project.</p>
-                </div>
-                <div class="imp-why">Why it matters: ERP success depends on coordinated organisation-wide adoption, not software alone.</div>
-            </div>
-            <div class="imp-point-card">
-                <div>
-                    <h4><span class="imp-point-num">5</span>Initial performance may stagnate or decline</h4>
-                    <p>Productivity can temporarily fall while employees learn new procedures and the organisation adjusts. Benefits may take time to emerge.</p>
-                </div>
-                <div class="imp-why">Why it matters: ERP success depends on coordinated organisation-wide adoption, not software alone.</div>
-            </div>
-            <div class="imp-point-card">
-                <div>
-                    <h4><span class="imp-point-num">6</span>Poor redesign, config, capacity & training create risk</h4>
-                    <p>Unclear workflows, incorrect settings, inadequate computing capacity and weak user preparation can cause errors, delays and resistance.</p>
-                </div>
-                <div class="imp-why">Why it matters: ERP success depends on coordinated organisation-wide adoption, not software alone.</div>
-            </div>
+        <div class="card kpi">
+            <div class="kpi-top">Sub-Industries Mapped <div class="kpi-icon">📋</div></div>
+            <div class="kpi-value" id="uomSubCount">24</div>
+            <div class="kpi-bottom">Standardised ERP UoM rules</div>
+        </div>
+        <div class="card kpi">
+            <div class="kpi-top">Base Standard Units <div class="kpi-icon">⚖</div></div>
+            <div class="kpi-value">12</div>
+            <div class="kpi-bottom">MT, kg, gm, ltr, m, cm, m², m³, pcs, sets, unit</div>
+        </div>
+        <div class="card kpi">
+            <div class="kpi-top">Active ERP Profile <div class="kpi-icon">✓</div></div>
+            <div class="kpi-value" id="activeIndustryBadge" style="font-size:18px;margin-top:16px">Electronical</div>
+            <div class="kpi-bottom">Default: pcs, m, cm</div>
         </div>
     </div>
 
-    <!-- SLIDE 02 -->
-    <div class="imp-subpanel" id="tab-lifecycle">
-        <div class="imp-note-banner">
-            <strong>Lifecycle Roadmap (Slide 02):</strong> These 6 stages provide a structured path from initial justification through deployment and subsequent evaluation.
+    <!-- Interactive UoM Selector & Quick Converter -->
+    <div class="grid-two">
+        <div class="card card-body">
+            <div class="card-header" style="padding:0 0 14px 0;margin-bottom:14px">
+                <div>
+                    <h3>Industry UoM Lookup & Profile Selector</h3>
+                    <p>Select a sector and sub-industry to view and apply its allowed measurement units</p>
+                </div>
+            </div>
+            <div class="form-grid" style="margin-bottom:14px">
+                <div class="field">
+                    <label for="uomSectorSelect">1. Industry Sector</label>
+                    <select class="form-control" id="uomSectorSelect" onchange="onUomSectorChange()"></select>
+                </div>
+                <div class="field">
+                    <label for="uomSubIndustrySelect">2. Sub-Industry</label>
+                    <select class="form-control" id="uomSubIndustrySelect" onchange="onUomSubIndustryChange()"></select>
+                </div>
+            </div>
+            <div style="padding:14px;border-radius:12px;background:var(--card2);border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+                <div>
+                    <small style="color:var(--muted);font-weight:700;display:block">Allowed Units of Measurement</small>
+                    <div id="selectedUomTags" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px"></div>
+                </div>
+                <button type="button" class="btn btn-primary btn-small" onclick="applyIndustryProfile()">Set as Active ERP Profile</button>
+            </div>
         </div>
-        <div class="imp-card-grid">
-            <div class="imp-point-card">
+
+        <div class="card card-body">
+            <div class="card-header" style="padding:0 0 14px 0;margin-bottom:14px">
                 <div>
-                    <h4><span class="imp-point-num">1</span>Pre-implementation: Business case & solution</h4>
-                    <p>The organisation defines why ERP is needed, assesses requirements and feasibility, compares products and selects a solution that fits its objectives.</p>
+                    <h3>Industrial Unit Converter</h3>
+                    <p>Convert quantities across weight, length, area, volume, and count units</p>
                 </div>
-                <span class="status status-success">Stage 1 · Justification</span>
             </div>
-            <div class="imp-point-card">
-                <div>
-                    <h4><span class="imp-point-num">2</span>Implementation: Change, projects & IT</h4>
-                    <p>This stage translates the plan into an operating system through process changes, project scheduling, infrastructure preparation, configuration and data transfer.</p>
+            <div class="form-grid" style="margin-bottom:12px">
+                <div class="field">
+                    <label for="convQtyInput">Quantity</label>
+                    <input class="form-control" id="convQtyInput" type="number" value="1" step="any" oninput="convertIndustrialUnits()">
                 </div>
-                <span class="status status-info">Stage 2 · Execution</span>
-            </div>
-            <div class="imp-point-card">
-                <div>
-                    <h4><span class="imp-point-num">3</span>Assess organisational readiness before rollout</h4>
-                    <p>Assess resources, processes, user support and infrastructure to determine whether the organisation can absorb the proposed changes.</p>
-                </div>
-                <span class="status status-warning">Stage 3 · Readiness Gate</span>
-            </div>
-            <div class="imp-point-card">
-                <div>
-                    <h4><span class="imp-point-num">4</span>Choose a phased or big-bang rollout approach</h4>
-                    <p>A <strong>phased rollout</strong> introduces modules or departments in stages. A <strong>big-bang rollout</strong> switches the organisation to the new system at once.</p>
-                </div>
-                <div style="display:flex;gap:8px;align-items:center">
-                    <select class="form-control" id="rolloutStrategySelect" style="height:34px;font-size:12px" onchange="toast('Rollout Approach Updated', 'Selected strategy: ' + this.value)">
-                        <option value="Phased Rollout (By Module / Department)">Selected: Phased Rollout</option>
-                        <option value="Big-Bang Rollout (Simultaneous Cutover)">Selected: Big-Bang Rollout</option>
+                <div class="field">
+                    <label for="convTypeSelect">Conversion Rule</label>
+                    <select class="form-control" id="convTypeSelect" onchange="convertIndustrialUnits()">
+                        <option value="mt_kg">Metric Ton (MT) → Kilogram (kg)</option>
+                        <option value="kg_gm">Kilogram (kg) → Gram (gm)</option>
+                        <option value="m_cm">Meter (m) → Centimeter (cm)</option>
+                        <option value="m3_ltr">Cubic Meter (m³) → Liter (ltr)</option>
+                        <option value="set_pcs">Sets (2 pcs/set) → Pieces (pcs)</option>
                     </select>
                 </div>
             </div>
-            <div class="imp-point-card">
-                <div>
-                    <h4><span class="imp-point-num">5</span>Post-implementation: Assess impact & improve</h4>
-                    <p>After go-live, review system performance and business outcomes, resolve operational issues and identify changes that can improve the ERP system.</p>
-                </div>
-                <span class="status status-info">Stage 5 · Optimisation</span>
-            </div>
-            <div class="imp-point-card">
-                <div>
-                    <h4><span class="imp-point-num">6</span>Post-impact analysis: 1–2 years after go-live</h4>
-                    <p>The text places post-impact analysis generally 1–2 years after implementation, allowing financial and organisational effects to be assessed after sustained operation.</p>
-                </div>
-                <span class="status status-success">Stage 6 · 1–2 Yr Review</span>
+            <div style="padding:14px;border-radius:12px;background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-weight:700;font-size:13px">Converted Result:</span>
+                <strong id="convResultDisplay" style="font-size:18px">1,000 kg</strong>
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 03 -->
-    <div class="imp-subpanel" id="tab-businesscase">
-        <div class="imp-note-banner">
-            <strong>Pre-Implementation Business Case (Slide 03):</strong> A sound business case helps decision-makers judge whether the organisation is ready to proceed. Evaluate all 7 criteria below.
-        </div>
-        <div class="card card-body" style="margin-bottom:18px">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-                <div>
-                    <h3>Business Case Readiness Checklist</h3>
-                    <p>Track completion of the 7 pre-implementation business case steps</p>
-                </div>
-                <span class="status status-info" id="bcScoreBadge">0 / 7 Verified</span>
+    <!-- Sector Filter Tabs & Complete Master Table -->
+    <div class="card card-body">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px">
+            <div>
+                <h3>Complete Industry & Unit of Measurement Directory</h3>
+                <p>Filter by sector or search any industry / unit (e.g. MT, ltr, m², sets, gm)</p>
             </div>
-            <div id="businessCaseChecklist"></div>
+            <input class="form-control" id="uomTableSearch" placeholder="Search industry or unit..." style="max-width:260px" oninput="renderUomMasterTable()">
+        </div>
+
+        <div class="imp-tabs" id="uomSectorTabs">
+            <button type="button" class="imp-tab-btn active" data-sector="all" onclick="filterUomBySector('all', this)">All Sectors (5)</button>
+            <button type="button" class="imp-tab-btn" data-sector="1. Heavy & Raw Materials" onclick="filterUomBySector('1. Heavy & Raw Materials', this)">1. Heavy & Raw Materials</button>
+            <button type="button" class="imp-tab-btn" data-sector="2. Process & Chemical Industries" onclick="filterUomBySector('2. Process & Chemical Industries', this)">2. Process & Chemical</button>
+            <button type="button" class="imp-tab-btn" data-sector="3. Engineering, Machinery & Electronics" onclick="filterUomBySector('3. Engineering, Machinery & Electronics', this)">3. Engg, Machinery & Electronics</button>
+            <button type="button" class="imp-tab-btn" data-sector="4. Consumer Goods" onclick="filterUomBySector('4. Consumer Goods', this)">4. Consumer Goods</button>
+            <button type="button" class="imp-tab-btn" data-sector="5. Food, Healthcare" onclick="filterUomBySector('5. Food, Healthcare', this)">5. Food & Healthcare</button>
+        </div>
+
+        <div class="table-container">
+            <table id="uomMasterTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Industry Sector</th>
+                        <th>Sub-Industry</th>
+                        <th>Units of Measurement (UoM)</th>
+                        <th>Primary ERP Usage</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -2501,9 +2480,27 @@ body { min-width: 320px; }
             <button type="button" class="close" data-close aria-label="Close dialog">×</button>
         </div>
         <form class="form" id="inventoryForm">
-            <div class="field">
-                <label>Component Name</label>
-                <input class="form-control" placeholder="e.g., 16GB DDR4 RAM">
+            <div class="form-grid">
+                <div class="field">
+                    <label>Component Name</label>
+                    <input class="form-control" id="invNameInput" placeholder="e.g., 16GB DDR4 RAM">
+                </div>
+                <div class="field">
+                    <label>Unit of Measurement (UoM)</label>
+                    <select class="form-control" id="invUnitSelect">
+                        <option value="pcs">pcs (Pieces)</option>
+                        <option value="unit">unit (Unit)</option>
+                        <option value="sets">sets (Sets)</option>
+                        <option value="kg">kg (Kilogram)</option>
+                        <option value="gm">gm (Gram)</option>
+                        <option value="MT">MT (Metric Ton)</option>
+                        <option value="ltr">ltr (Liter)</option>
+                        <option value="m">m (Meter)</option>
+                        <option value="cm">cm (Centimeter)</option>
+                        <option value="m²">m² (Square Meter)</option>
+                        <option value="m³">m³ (Cubic Meter)</option>
+                    </select>
+                </div>
             </div>
             <div class="form-actions">
                 <button type="button" class="btn btn-outline" data-close>Cancel</button>
@@ -2888,11 +2885,12 @@ document.querySelectorAll('form').forEach(form => {
             renderOrders();
             toast('Production order created', `${qty} unit(s) of ${model} added to the production queue.`);
         } else if (form.id === 'inventoryForm') {
-            const name = form.querySelector('input')?.value.trim();
+            const name = form.querySelector('#invNameInput')?.value.trim() || form.querySelector('input')?.value.trim();
+            const unit = form.querySelector('#invUnitSelect')?.value || 'pcs';
             if (!name) { form.querySelector('input')?.focus(); toast('Component required','Enter a component name before saving stock.'); return; }
-            inventory.unshift({name, category:'New component', stock:0, unit:'pcs', warehouse:'WH-01', reorder:10});
+            inventory.unshift({name, category:'New component', stock:0, unit, warehouse:'WH-01', reorder:10});
             renderInventory();
-            toast('Inventory saved', `${name} was added with an initial stock of 0 pcs.`);
+            toast('Inventory saved', `${name} (${unit}) was added with an initial stock of 0 ${unit}.`);
         } else if (form.id === 'purchaseForm') {
             const supplier = form.querySelector('input')?.value.trim();
             if (!supplier) { form.querySelector('input')?.focus(); toast('Supplier required','Enter a supplier name before submitting the purchase order.'); return; }
@@ -2937,22 +2935,22 @@ document.addEventListener('click', (event) => {
 
 // Department-level workspace configuration (based on the 21 departments in the planning notes).
 const departmentPermissions = {
- md:['dashboard','reports','settings','finance','production','inventory','procurement','orders','quality','workforce','pricing','tasks','machines','bom','crm','employees','payroll','maintenance','shipping'],
+ md:['dashboard','reports','settings','finance','production','inventory','procurement','orders','quality','workforce','pricing','tasks','machines','bom','uom-master','crm','employees','payroll','maintenance','shipping'],
  finance:['dashboard','finance','pricing','reports'],
- production:['dashboard','production','quality','inventory','tasks','machines','bom','maintenance','reports'],
- warehouse:['dashboard','inventory','shipping','reports'],
+ production:['dashboard','production','quality','inventory','tasks','machines','bom','uom-master','maintenance','reports'],
+ warehouse:['dashboard','inventory','uom-master','shipping','reports'],
  quality:['dashboard','quality','production','reports'],
  packing:['dashboard','shipping','inventory','reports'],
  security:['dashboard','reports'],
  hr:['dashboard','workforce','employees','payroll','tasks','reports'],
  sales:['dashboard','orders','finance','pricing','crm','shipping','reports'],
- supplychain:['dashboard','procurement','inventory','bom','shipping','reports'],
- design:['dashboard','bom','production','reports'],
+ supplychain:['dashboard','procurement','inventory','bom','uom-master','shipping','reports'],
+ design:['dashboard','bom','uom-master','production','reports'],
  fleet:['dashboard','shipping','reports'],
  maintenance:['dashboard','maintenance','machines','reports'],
  contractors:['dashboard','tasks','maintenance','reports'],
  repair:['dashboard','crm','quality','shipping','reports'],
- purchasing:['dashboard','procurement','inventory','reports'],
+ purchasing:['dashboard','procurement','inventory','uom-master','reports'],
  marketing:['dashboard','crm','orders','reports'],
  assembly:['dashboard','production','tasks','quality','reports'],
  machinemaint:['dashboard','machines','maintenance','reports'],
@@ -3471,6 +3469,179 @@ function filterInventoryTable() {
 }
 document.getElementById('inventorySearch')?.addEventListener('input', filterInventoryTable);
 document.getElementById('inventoryFilter')?.addEventListener('change', filterInventoryTable);
+
+/* ========================================================================= */
+/* INDUSTRY & UNIT OF MEASUREMENT (UoM) MASTER ENGINE                        */
+/* ========================================================================= */
+
+const industryUomData = [
+    // 1. Heavy & Raw Materials
+    { sector: "1. Heavy & Raw Materials", sub: "Steel & Heavy Metals", units: ["MT", "kg", "m"], usage: "Bulk coil/bar weight & structural length" },
+    { sector: "1. Heavy & Raw Materials", sub: "Cement & Building", units: ["MT", "cubic meter (m³)"], usage: "Bulk tonnage & ready-mix volume" },
+    { sector: "1. Heavy & Raw Materials", sub: "Mining", units: ["MT", "kg", "m³"], usage: "Ore extraction weight & excavation volume" },
+    { sector: "1. Heavy & Raw Materials", sub: "Glass & Ceramic", units: ["m²", "kg", "pcs"], usage: "Sheet surface area, batch weight & tile count" },
+
+    // 2. Process & Chemical Industries
+    { sector: "2. Process & Chemical Industries", sub: "Chemical", units: ["ltr", "kg", "MT"], usage: "Liquid solvents, reagents & bulk tankers" },
+    { sector: "2. Process & Chemical Industries", sub: "Paint", units: ["ltr", "kg"], usage: "Liquid coatings & pigment formulation" },
+    { sector: "2. Process & Chemical Industries", sub: "Rubber & Tyre", units: ["kg", "pcs"], usage: "Raw elastomer compounds & moulded tyres" },
+    { sector: "2. Process & Chemical Industries", sub: "Fertilizer", units: ["kg", "MT"], usage: "Bagged nutrients & bulk agricultural tonnage" },
+    { sector: "2. Process & Chemical Industries", sub: "Plastic & Polymer", units: ["kg", "MT"], usage: "Resin granules & extrusion tonnage" },
+
+    // 3. Engineering, Machinery & Electronics
+    { sector: "3. Engineering, Machinery & Electronics", sub: "Automobile", units: ["unit", "kg"], usage: "Finished vehicles & chassis/metal weight" },
+    { sector: "3. Engineering, Machinery & Electronics", sub: "Electronical", units: ["pcs", "m", "cm"], usage: "ICs/components, ribbon length & PCB dimensions" },
+    { sector: "3. Engineering, Machinery & Electronics", sub: "Heavy Machine", units: ["unit (pcs)", "sets"], usage: "Standalone equipment & multi-part assemblies" },
+    { sector: "3. Engineering, Machinery & Electronics", sub: "Solar Power", units: ["pcs", "m²"], usage: "PV module count & array installation area" },
+    { sector: "3. Engineering, Machinery & Electronics", sub: "Electric Equipment", units: ["pcs", "sets"], usage: "Switchgear units & matched panel kits" },
+    { sector: "3. Engineering, Machinery & Electronics", sub: "Cable Wire", units: ["m", "cm", "kg"], usage: "Spool length, cut leads & conductor weight" },
+
+    // 4. Consumer Goods
+    { sector: "4. Consumer Goods", sub: "Textile", units: ["m", "kg", "pcs"], usage: "Fabric roll length, yarn weight & garments" },
+    { sector: "4. Consumer Goods", sub: "Jewellery", units: ["gm", "kg", "pcs"], usage: "Precious metal weight & finished pieces" },
+    { sector: "4. Consumer Goods", sub: "Leather", units: ["m²", "kg"], usage: "Hide surface area & bulk leather weight" },
+    { sector: "4. Consumer Goods", sub: "Sports", units: ["pcs", "kg", "m"], usage: "Equipment count, weights & netting/turf length" },
+    { sector: "4. Consumer Goods", sub: "Furniture", units: ["pcs", "set", "m"], usage: "Individual items, dining/office sets & timber" },
+    { sector: "4. Consumer Goods", sub: "Handloom", units: ["m", "pcs"], usage: "Woven fabric length & finished handloom items" },
+
+    // 5. Food, Healthcare
+    { sector: "5. Food, Healthcare", sub: "Medical Device", units: ["pcs", "sets"], usage: "Diagnostic instruments & surgical kits" },
+    { sector: "5. Food, Healthcare", sub: "Biomedical", units: ["gm", "ltr", "pcs"], usage: "Micro-reagents, media volume & consumables" },
+    { sector: "5. Food, Healthcare", sub: "Dairy Product", units: ["ltr", "kg", "gm"], usage: "Milk volume, butter/cheese bulk & retail packs" }
+];
+
+let activeUomSectorFilter = "all";
+
+function initUomSelectors() {
+    const sectorSel = document.getElementById("uomSectorSelect");
+    if (!sectorSel) return;
+    const sectors = [...new Set(industryUomData.map(d => d.sector))];
+    sectorSel.innerHTML = sectors.map(s => `<option value="${s}">${s}</option>`).join("");
+    sectorSel.value = "3. Engineering, Machinery & Electronics";
+    onUomSectorChange();
+    const subSel = document.getElementById("uomSubIndustrySelect");
+    if (subSel) {
+        subSel.value = "Electronical";
+        onUomSubIndustryChange();
+    }
+}
+
+function onUomSectorChange() {
+    const sector = document.getElementById("uomSectorSelect")?.value;
+    const subSel = document.getElementById("uomSubIndustrySelect");
+    if (!subSel) return;
+    const subs = industryUomData.filter(d => d.sector === sector);
+    subSel.innerHTML = subs.map(s => `<option value="${s.sub}">${s.sub}</option>`).join("");
+    onUomSubIndustryChange();
+}
+
+function onUomSubIndustryChange() {
+    const sector = document.getElementById("uomSectorSelect")?.value;
+    const sub = document.getElementById("uomSubIndustrySelect")?.value;
+    const tagsEl = document.getElementById("selectedUomTags");
+    if (!tagsEl) return;
+    const entry = industryUomData.find(d => d.sector === sector && d.sub === sub);
+    if (!entry) return;
+    tagsEl.innerHTML = entry.units.map(u => `<span class="status status-info" style="font-size:12px">${u}</span>`).join("");
+}
+
+function applyIndustryProfile() {
+    const sector = document.getElementById("uomSectorSelect")?.value;
+    const sub = document.getElementById("uomSubIndustrySelect")?.value;
+    const entry = industryUomData.find(d => d.sector === sector && d.sub === sub);
+    if (!entry) return;
+    const badge = document.getElementById("activeIndustryBadge");
+    if (badge) {
+        badge.textContent = entry.sub;
+        badge.nextElementSibling.textContent = `Units: ${entry.units.join(", ")}`;
+    }
+    const invSelect = document.getElementById("invUnitSelect");
+    if (invSelect && entry.units.length > 0) {
+        const primary = entry.units[0].split(" ")[0];
+        const match = [...invSelect.options].find(o => o.value.toLowerCase() === primary.toLowerCase());
+        if (match) invSelect.value = match.value;
+    }
+    toast("Industry Profile Applied", `${entry.sub} (${entry.units.join(", ")}) set as active UoM standard.`);
+}
+
+function filterUomBySector(sector, btnEl) {
+    activeUomSectorFilter = sector;
+    document.querySelectorAll("#uomSectorTabs .imp-tab-btn").forEach(b => b.classList.remove("active"));
+    if (btnEl) btnEl.classList.add("active");
+    renderUomMasterTable();
+}
+
+function renderUomMasterTable() {
+    const tbody = document.querySelector("#uomMasterTable tbody");
+    const countEl = document.getElementById("uomSubCount");
+    if (countEl) countEl.textContent = industryUomData.length;
+    if (!tbody) return;
+    const q = (document.getElementById("uomTableSearch")?.value || "").trim().toLowerCase();
+    const filtered = industryUomData.filter(row => {
+        const matchesSector = activeUomSectorFilter === "all" || row.sector === activeUomSectorFilter;
+        const matchesQuery = !q ||
+            row.sector.toLowerCase().includes(q) ||
+            row.sub.toLowerCase().includes(q) ||
+            row.units.join(" ").toLowerCase().includes(q) ||
+            row.usage.toLowerCase().includes(q);
+        return matchesSector && matchesQuery;
+    });
+    tbody.innerHTML = filtered.map((row, idx) => `
+        <tr>
+            <td><strong>${String(idx + 1).padStart(2, "0")}</strong></td>
+            <td>${row.sector}</td>
+            <td class="model">${row.sub}</td>
+            <td>${row.units.map(u => `<span class="status status-info" style="margin-right:4px">${u}</span>`).join("")}</td>
+            <td>${row.usage}</td>
+            <td><button type="button" class="btn btn-outline btn-small" onclick="selectIndustryFromTable('${row.sector.replace(/'/g, "\\'")}', '${row.sub.replace(/'/g, "\\'")}')">Use UoM</button></td>
+        </tr>
+    `).join("");
+}
+
+function selectIndustryFromTable(sector, sub) {
+    const sectorSel = document.getElementById("uomSectorSelect");
+    const subSel = document.getElementById("uomSubIndustrySelect");
+    if (sectorSel && subSel) {
+        sectorSel.value = sector;
+        onUomSectorChange();
+        subSel.value = sub;
+        onUomSubIndustryChange();
+        applyIndustryProfile();
+    }
+}
+
+function convertIndustrialUnits() {
+    const qty = Number(document.getElementById("convQtyInput")?.value) || 0;
+    const rule = document.getElementById("convTypeSelect")?.value || "mt_kg";
+    const out = document.getElementById("convResultDisplay");
+    if (!out) return;
+    const map = {
+        mt_kg: [qty * 1000, "kg"],
+        kg_gm: [qty * 1000, "gm"],
+        m_cm: [qty * 100, "cm"],
+        m3_ltr: [qty * 1000, "ltr"],
+        set_pcs: [qty * 2, "pcs"]
+    };
+    const [val, unit] = map[rule] || [qty, ""];
+    out.textContent = `${val.toLocaleString("en-IN")} ${unit}`;
+}
+
+function addCustomUomRow() {
+    const sector = document.getElementById("uomSectorSelect")?.value || "3. Engineering, Machinery & Electronics";
+    industryUomData.push({
+        sector,
+        sub: `Custom Sub-Industry #${industryUomData.length + 1}`,
+        units: ["pcs", "kg", "m"],
+        usage: "Custom ERP material & assembly measurement"
+    });
+    renderUomMasterTable();
+    toast("Industry UoM Added", "A new sub-industry UoM entry was added to the master table.");
+}
+
+// Initialize Industry & UoM Master
+initUomSelectors();
+renderUomMasterTable();
+convertIndustrialUnits();
 
 // Initialize
 renderOrders();
